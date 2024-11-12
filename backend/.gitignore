@@ -13,6 +13,7 @@ data/pgdata/
 # Ignore .env files
 .env
 
+.idea
 ### STS ###
 .apt_generated
 .classpath
