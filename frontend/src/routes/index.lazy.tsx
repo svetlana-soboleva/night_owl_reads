@@ -1,3 +1,5 @@
+import { WelcomeMsg } from "@/components/welcome/WelcomeMsg";
+import { SignedOut } from "@clerk/clerk-react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/")({
@@ -6,15 +8,8 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <div className="flex flex-col gap-4 items-center rounded-lg p-8 bg-gradient-to-r from-gray-500">
-      <h1 className="text-3xl font-bold text-white">Welcome to Story Magic!</h1>
-      <p className="text-lg text-white">Stories are waiting for you—where every word unlocks a new adventure!</p>
-      <button className="bg-teal-700 font-semibold py-2 px-6 rounded-full hover:bg-teal-900 text-white">
-        Start Your Adventure
-      </button>
-      <p className="mt-4 text-md text-white">
-        <strong>Did you know?</strong> Reading helps you imagine amazing worlds and understand new things! Keep reading every day to become a reading superhero!
-      </p>
-    </div>
+    <SignedOut>
+      <WelcomeMsg />
+    </SignedOut>
   );
 }
