@@ -1,0 +1,10 @@
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/domain/StoryRequest.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/controller/StoriesController.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/ChatgptBotApplication.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/domain/Story.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/dto/Message.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/dto/ChatGptResponse.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/config/OpenAIConfig.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/repository/StoryRepository.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/domain/StoryService.java
+/Users/svetlana/Documents/SALT/projects/springboot-chatgpt/src/main/java/com/javatechie/dto/ChatGPTRequest.java
