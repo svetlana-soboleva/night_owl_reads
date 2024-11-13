@@ -10,6 +10,6 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["night"],
+    themes: ["night", "dracula"],
   },
 };

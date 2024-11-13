@@ -13,12 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
 import { Route as SigninIndexImport } from './routes/signin/index'
+import { Route as ProfileProfileIdImport } from './routes/profile/$profileId'
 
 // Create Virtual Routes
 
 const MyStoriesLazyImport = createFileRoute('/myStories')()
-const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -28,15 +29,21 @@ const MyStoriesLazyRoute = MyStoriesLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/myStories.lazy').then((d) => d.Route))
 
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 const SigninIndexRoute = SigninIndexImport.update({
   id: '/signin/',
   path: '/signin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileProfileIdRoute = ProfileProfileIdImport.update({
+  id: '/profile/$profileId',
+  path: '/profile/$profileId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,7 +55,7 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/myStories': {
@@ -56,6 +63,13 @@ declare module '@tanstack/react-router' {
       path: '/myStories'
       fullPath: '/myStories'
       preLoaderRoute: typeof MyStoriesLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/$profileId': {
+      id: '/profile/$profileId'
+      path: '/profile/$profileId'
+      fullPath: '/profile/$profileId'
+      preLoaderRoute: typeof ProfileProfileIdImport
       parentRoute: typeof rootRoute
     }
     '/signin/': {
@@ -71,42 +85,47 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
   '/myStories': typeof MyStoriesLazyRoute
+  '/profile/$profileId': typeof ProfileProfileIdRoute
   '/signin': typeof SigninIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
   '/myStories': typeof MyStoriesLazyRoute
+  '/profile/$profileId': typeof ProfileProfileIdRoute
   '/signin': typeof SigninIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
   '/myStories': typeof MyStoriesLazyRoute
+  '/profile/$profileId': typeof ProfileProfileIdRoute
   '/signin/': typeof SigninIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/myStories' | '/signin'
+  fullPaths: '/' | '/myStories' | '/profile/$profileId' | '/signin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/myStories' | '/signin'
-  id: '__root__' | '/' | '/myStories' | '/signin/'
+  to: '/' | '/myStories' | '/profile/$profileId' | '/signin'
+  id: '__root__' | '/' | '/myStories' | '/profile/$profileId' | '/signin/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
+  IndexRoute: typeof IndexRoute
   MyStoriesLazyRoute: typeof MyStoriesLazyRoute
+  ProfileProfileIdRoute: typeof ProfileProfileIdRoute
   SigninIndexRoute: typeof SigninIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
+  IndexRoute: IndexRoute,
   MyStoriesLazyRoute: MyStoriesLazyRoute,
+  ProfileProfileIdRoute: ProfileProfileIdRoute,
   SigninIndexRoute: SigninIndexRoute,
 }
 
@@ -122,14 +141,18 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/myStories",
+        "/profile/$profileId",
         "/signin/"
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
     },
     "/myStories": {
       "filePath": "myStories.lazy.tsx"
+    },
+    "/profile/$profileId": {
+      "filePath": "profile/$profileId.tsx"
     },
     "/signin/": {
       "filePath": "signin/index.tsx"
