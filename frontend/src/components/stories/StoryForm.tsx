@@ -19,7 +19,7 @@ export const StoryForm = () => {
       </label>
       <label className="input input-bordered input-secondary  flex items-center gap-2">
         Emotions
-        <input type="text" className="grow" placeholder="What did they feel?" />
+        <input type="text" className="grow" placeholder="How did they feel?" />
       </label>
     </div>
   );
