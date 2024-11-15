@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "story-magic": "url('./public/boywithbook2.webp')",
+        "story-magic": "url('/public/boywithbook2.webp')",
       },
     },
   },

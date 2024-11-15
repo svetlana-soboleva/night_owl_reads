@@ -1,6 +1,6 @@
 export const StoryForm = () => {
   return (
-    <div className="flex flex-col gap-4 backdrop-blur-md bg-transparent rounded-2xl px-8 py-20">
+    <form className="flex flex-col gap-4 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16">
       <label className="input input-bordered input-secondary flex items-center gap-2">
         Hero
         <input type="text" className="grow" placeholder="Hamster" />
@@ -21,6 +21,7 @@ export const StoryForm = () => {
         Emotions
         <input type="text" className="grow" placeholder="How did they feel?" />
       </label>
-    </div>
+      <button className="btn btn-active btn-secondary">Generate Story</button>
+    </form>
   );
 };

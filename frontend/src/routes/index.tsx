@@ -1,6 +1,6 @@
 // import { StoryForm } from '@/components/stories/StoryForm'
 import { WelcomeMsg } from "@/components/welcome/WelcomeMsg";
-import { SignedOut } from "@clerk/clerk-react";
+import { SignedOut, useAuth } from "@clerk/clerk-react";
 
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -15,6 +15,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { isSignedIn, userId } = useAuth();
+
+  if (isSignedIn) {
+    throw redirect({ to: `/profile/${userId}` });
+  }
+
   return (
     <>
       <SignedOut>
