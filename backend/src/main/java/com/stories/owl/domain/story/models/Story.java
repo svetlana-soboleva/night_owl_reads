@@ -1,5 +1,4 @@
 package com.stories.owl.domain.story.models;
-
 import com.stories.owl.domain.storyPart.model.StoryPart;
 import com.stories.owl.domain.user.models.User;
 import jakarta.persistence.*;
@@ -17,9 +16,11 @@ public class Story {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id)")
+    @JoinColumn(name="user_id")
     private User user;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<StoryPart> chunks;
+
+
 }

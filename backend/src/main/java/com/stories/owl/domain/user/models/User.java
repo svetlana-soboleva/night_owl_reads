@@ -1,5 +1,6 @@
 package com.stories.owl.domain.user.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stories.owl.domain.story.models.Story;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,8 +14,7 @@ public class User {
     @Id
     private String id; //I will take it directly from Clerk
 
-    private String name;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+   // @JsonIgnore
     private List<Story> stories;
 }

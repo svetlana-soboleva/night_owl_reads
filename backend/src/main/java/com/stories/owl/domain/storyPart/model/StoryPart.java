@@ -17,9 +17,15 @@ public class StoryPart {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    private String imageUrl;
+//    private String imageUrl;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="story_id")
     private Story story;
+
+    public StoryPart(int partNumber, String text, Story story) {
+        this.partNumber = partNumber;
+        this.text = text;
+        this.story = story;
+    }
 }
