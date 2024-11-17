@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stories")
+@CrossOrigin
 public class StoryController {
 
     private final GPTService gptService;

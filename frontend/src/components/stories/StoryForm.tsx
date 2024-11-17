@@ -1,20 +1,27 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IFormInput, storySchema } from "@/data/types/types";
+import { StoryInput, storySchema } from "@/data/types/types";
 
-export const StoryForm = () => {
+interface storyFormProps {
+  onSubmit: (data: StoryInput) => void
+}
+
+export const StoryForm = ({onSubmit} : storyFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>({ resolver: zodResolver(storySchema) });
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  } = useForm<StoryInput>({ resolver: zodResolver(storySchema) });
+  
+  const handleFormSubmit: SubmitHandler<StoryInput> = (data) => {
+    onSubmit(data)
+  }
 
   return (
     <form
       className="flex flex-col gap-2 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleFormSubmit)}
     >
       <label className="input input-bordered input-secondary flex items-center gap-2">
         Hero
