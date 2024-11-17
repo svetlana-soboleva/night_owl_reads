@@ -1,27 +1,84 @@
+import { useForm, SubmitHandler } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IFormInput, storySchema } from "@/data/types/types";
+
 export const StoryForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>({ resolver: zodResolver(storySchema) });
+  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+
   return (
-    <form className="flex flex-col gap-4 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16">
+    <form
+      className="flex flex-col gap-2 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <label className="input input-bordered input-secondary flex items-center gap-2">
         Hero
-        <input type="text" className="grow" placeholder="Hamster" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Hamster"
+          {...register("hero")}
+        />
       </label>
+      {errors.hero && (
+        <p className="text-white text-sm">{errors.hero.message}</p>
+      )}
       <label className="input input-bordered input-secondary  flex items-center gap-2">
         Place
-        <input type="text" className="grow" placeholder="Magic Forest" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Magic Forest"
+          {...register("place")}
+        />
       </label>
+      {errors.place && (
+        <p className="text-white text-sm">{errors.place.message}</p>
+      )}
       <label className="input input-bordered input-secondary  flex items-center gap-2">
         Companion
-        <input type="text" className="grow" placeholder="Squirrel" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Squirrel"
+          {...register("companion")}
+        />
       </label>
+      {errors.companion && (
+        <p className="text-white text-sm">{errors.companion.message}</p>
+      )}
       <label className="input input-bordered input-secondary  flex items-center gap-2">
         Quest
-        <input type="text" className="grow" placeholder="What they did?" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="What they did?"
+          {...register("quest")}
+        />
       </label>
+      {errors.quest && (
+        <p className="text-white text-sm">{errors.quest.message}</p>
+      )}
       <label className="input input-bordered input-secondary  flex items-center gap-2">
         Emotions
-        <input type="text" className="grow" placeholder="How did they feel?" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="How did they feel?"
+          {...register("emotions")}
+        />
       </label>
-      <button className="btn btn-active btn-secondary">Generate Story</button>
+      {errors.emotions && (
+        <p className="text-white text-sm">{errors.emotions.message}</p>
+      )}
+      <button type="submit" className="btn btn-active btn-secondary">
+        Generate Story
+      </button>
     </form>
   );
 };
