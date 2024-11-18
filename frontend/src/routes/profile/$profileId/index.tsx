@@ -3,7 +3,7 @@ import { generateStory } from "@/data/api";
 import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
 
@@ -14,9 +14,14 @@ export const Route = createFileRoute("/profile/$profileId/")({
 function ProfileComponent() {
   const { user } = useUser();
   const { userId } = useAuth();
+  const navigate = useNavigate(); 
 
   const { mutate, isPending, isError, data } = useMutation({
     mutationFn: (payload) => generateStory(payload, userId),
+    onSuccess: (data) => {
+      //@ts-ignore
+      navigate(`/profile/${userId}/stories/${data.id}`);
+    },
   });
 
   const handleFormSubmit = (formData: StoryInput) => {
@@ -25,7 +30,7 @@ function ProfileComponent() {
 
   if (isError) return <div>Something went wrong</div>;
   if (isPending) return <LoadingBubbles />;
-  if(data) return <div>{data}</div>
+  if(data) return <div>redirect</div>
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">

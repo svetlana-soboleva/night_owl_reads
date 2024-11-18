@@ -1,5 +1,5 @@
-package com.stories.owl.domain.Dalle.services;
-import com.stories.owl.domain.Dalle.http.ImageGenerationException;
+package com.stories.owl.domain.dalle.services;
+import com.stories.owl.domain.dalle.http.ImageGenerationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.image.ImagePrompt;
@@ -30,16 +30,16 @@ public class DalleService {
             ImageResponse response = openAiImageModel.call(new ImagePrompt(
                     prompt,
                     OpenAiImageOptions.builder()
-                            .withModel("dall-e-2")
+                            .withModel("dall-e-3")
                             .withQuality("hd")
                             .withN(1)
-                            .withHeight(512)
-                            .withWidth(512).build()
+                            .withHeight(1024)
+                            .withWidth(1024).build()
             ));
             long endTime = System.currentTimeMillis();
             logger.info("OpenAI image generation took {} ms", (endTime - startTime));
             if (response != null && response.getResults() != null && !response.getResults().isEmpty()) {
-                logger.info("Image created successfully : " + response.getResults().get(0).getOutput().getUrl());
+                logger.info("Image created successfully : " + response.getResult().getOutput().getUrl());
                 return response.getResult().getOutput().getUrl();
             } else {
                 logger.error("Failed to generate image. Response is empty or invalid.");

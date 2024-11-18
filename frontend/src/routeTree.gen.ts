@@ -14,7 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as SigninIndexImport } from './routes/signin/index'
 import { Route as ProfileProfileIdIndexImport } from './routes/profile/$profileId/index'
-import { Route as ProfileProfileIdStoriesImport } from './routes/profile/$profileId.stories'
+import { Route as ProfileProfileIdStoriesIndexImport } from './routes/profile/$profileId/stories/index'
+import { Route as ProfileProfileIdStoriesStoryIdImport } from './routes/profile/$profileId/stories/$storyId'
 
 // Create/Update Routes
 
@@ -36,11 +37,19 @@ const ProfileProfileIdIndexRoute = ProfileProfileIdIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProfileProfileIdStoriesRoute = ProfileProfileIdStoriesImport.update({
-  id: '/profile/$profileId/stories',
-  path: '/profile/$profileId/stories',
-  getParentRoute: () => rootRoute,
-} as any)
+const ProfileProfileIdStoriesIndexRoute =
+  ProfileProfileIdStoriesIndexImport.update({
+    id: '/profile/$profileId/stories/',
+    path: '/profile/$profileId/stories/',
+    getParentRoute: () => rootRoute,
+  } as any)
+
+const ProfileProfileIdStoriesStoryIdRoute =
+  ProfileProfileIdStoriesStoryIdImport.update({
+    id: '/profile/$profileId/stories/$storyId',
+    path: '/profile/$profileId/stories/$storyId',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -60,18 +69,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninIndexImport
       parentRoute: typeof rootRoute
     }
-    '/profile/$profileId/stories': {
-      id: '/profile/$profileId/stories'
-      path: '/profile/$profileId/stories'
-      fullPath: '/profile/$profileId/stories'
-      preLoaderRoute: typeof ProfileProfileIdStoriesImport
-      parentRoute: typeof rootRoute
-    }
     '/profile/$profileId/': {
       id: '/profile/$profileId/'
       path: '/profile/$profileId'
       fullPath: '/profile/$profileId'
       preLoaderRoute: typeof ProfileProfileIdIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/$profileId/stories/$storyId': {
+      id: '/profile/$profileId/stories/$storyId'
+      path: '/profile/$profileId/stories/$storyId'
+      fullPath: '/profile/$profileId/stories/$storyId'
+      preLoaderRoute: typeof ProfileProfileIdStoriesStoryIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/$profileId/stories/': {
+      id: '/profile/$profileId/stories/'
+      path: '/profile/$profileId/stories'
+      fullPath: '/profile/$profileId/stories'
+      preLoaderRoute: typeof ProfileProfileIdStoriesIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -82,23 +98,26 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/signin': typeof SigninIndexRoute
-  '/profile/$profileId/stories': typeof ProfileProfileIdStoriesRoute
   '/profile/$profileId': typeof ProfileProfileIdIndexRoute
+  '/profile/$profileId/stories/$storyId': typeof ProfileProfileIdStoriesStoryIdRoute
+  '/profile/$profileId/stories': typeof ProfileProfileIdStoriesIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninIndexRoute
-  '/profile/$profileId/stories': typeof ProfileProfileIdStoriesRoute
   '/profile/$profileId': typeof ProfileProfileIdIndexRoute
+  '/profile/$profileId/stories/$storyId': typeof ProfileProfileIdStoriesStoryIdRoute
+  '/profile/$profileId/stories': typeof ProfileProfileIdStoriesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/signin/': typeof SigninIndexRoute
-  '/profile/$profileId/stories': typeof ProfileProfileIdStoriesRoute
   '/profile/$profileId/': typeof ProfileProfileIdIndexRoute
+  '/profile/$profileId/stories/$storyId': typeof ProfileProfileIdStoriesStoryIdRoute
+  '/profile/$profileId/stories/': typeof ProfileProfileIdStoriesIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -106,31 +125,40 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/signin'
-    | '/profile/$profileId/stories'
     | '/profile/$profileId'
+    | '/profile/$profileId/stories/$storyId'
+    | '/profile/$profileId/stories'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/profile/$profileId/stories' | '/profile/$profileId'
+  to:
+    | '/'
+    | '/signin'
+    | '/profile/$profileId'
+    | '/profile/$profileId/stories/$storyId'
+    | '/profile/$profileId/stories'
   id:
     | '__root__'
     | '/'
     | '/signin/'
-    | '/profile/$profileId/stories'
     | '/profile/$profileId/'
+    | '/profile/$profileId/stories/$storyId'
+    | '/profile/$profileId/stories/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
-  ProfileProfileIdStoriesRoute: typeof ProfileProfileIdStoriesRoute
   ProfileProfileIdIndexRoute: typeof ProfileProfileIdIndexRoute
+  ProfileProfileIdStoriesStoryIdRoute: typeof ProfileProfileIdStoriesStoryIdRoute
+  ProfileProfileIdStoriesIndexRoute: typeof ProfileProfileIdStoriesIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SigninIndexRoute: SigninIndexRoute,
-  ProfileProfileIdStoriesRoute: ProfileProfileIdStoriesRoute,
   ProfileProfileIdIndexRoute: ProfileProfileIdIndexRoute,
+  ProfileProfileIdStoriesStoryIdRoute: ProfileProfileIdStoriesStoryIdRoute,
+  ProfileProfileIdStoriesIndexRoute: ProfileProfileIdStoriesIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -145,8 +173,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/signin/",
-        "/profile/$profileId/stories",
-        "/profile/$profileId/"
+        "/profile/$profileId/",
+        "/profile/$profileId/stories/$storyId",
+        "/profile/$profileId/stories/"
       ]
     },
     "/": {
@@ -155,11 +184,14 @@ export const routeTree = rootRoute
     "/signin/": {
       "filePath": "signin/index.tsx"
     },
-    "/profile/$profileId/stories": {
-      "filePath": "profile/$profileId.stories.tsx"
-    },
     "/profile/$profileId/": {
       "filePath": "profile/$profileId/index.tsx"
+    },
+    "/profile/$profileId/stories/$storyId": {
+      "filePath": "profile/$profileId/stories/$storyId.tsx"
+    },
+    "/profile/$profileId/stories/": {
+      "filePath": "profile/$profileId/stories/index.tsx"
     }
   }
 }

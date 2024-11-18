@@ -1,4 +1,4 @@
-package com.stories.owl.domain.Dalle.http;
+package com.stories.owl.domain.dalle.http;
 
 public class ImageGenerationException extends RuntimeException {
     public ImageGenerationException(String message) {

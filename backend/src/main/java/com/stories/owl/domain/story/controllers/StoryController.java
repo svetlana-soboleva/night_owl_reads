@@ -1,21 +1,26 @@
 package com.stories.owl.domain.story.controllers;
 
-import com.stories.owl.domain.Dalle.services.DalleService;
-import com.stories.owl.domain.chatGPT.services.GPTService;
+import com.stories.owl.domain.dalle.services.DalleService;
+import com.stories.owl.domain.chatgpt.services.GPTService;
 import com.stories.owl.domain.story.StoryService;
 import com.stories.owl.domain.story.dtos.StoryDTO;
 import com.stories.owl.domain.story.dtos.StoryGalleryDto;
 import com.stories.owl.domain.story.dtos.StoryRequestDTO;
 import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.storyPart.model.StoryPart;
+import com.stories.owl.domain.supaBase.services.SupabaseService;
 import com.stories.owl.domain.user.UserService;
 import com.stories.owl.domain.user.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -27,21 +32,23 @@ public class StoryController {
     private final StoryService storyService;
     private final UserService userService;
     private final DalleService dalleService;
- 
+    private final SupabaseService supabase;
 
     public StoryController(@Autowired GPTService gptService,
                            @Autowired StoryService storyService,
                            @Autowired UserService userService,
-                           @Autowired DalleService dalleService
+                           @Autowired DalleService dalleService,
+                           @Autowired SupabaseService supabase
                            ) {
         this.gptService = gptService;
         this.storyService = storyService;
         this.userService = userService;
         this.dalleService = dalleService;
+        this.supabase = supabase;
     }
 
     @PostMapping("/generate/{id}")
-    public ResponseEntity<StoryDTO> addStory(@PathVariable String id, @RequestBody StoryRequestDTO body){
+    public ResponseEntity<StoryDTO> addStory(@PathVariable String id, @RequestBody StoryRequestDTO body) throws IOException {
         User user = userService.getUserById(id);
         if(user == null){
             user = new User();
@@ -60,6 +67,13 @@ public class StoryController {
 
         String[] lines = storyContent.split("\n");
         String title = lines[0].trim();
+        //remove title if starts with Title
+        if (title.startsWith("Title: ")) {
+            title = title.replaceFirst("Title: ", "").trim();
+        }
+        //remove white spaces to save url
+        title = title.replaceAll(" ", "");
+        title = title.replaceAll("[^a-zA-Z0-9]", "");
 
         String storyBody = String.join(" ", Arrays.copyOfRange(lines, 1, lines.length)).trim();
 
@@ -71,19 +85,21 @@ public class StoryController {
 
         List<StoryPart> parts = new ArrayList<>();
         for (int i = 0; i < chunks.length; i++) {
-            String chunk = chunks[i];
-
-
-            String prompt = "Generate a magical children's book illustration for this part of the story: " + chunk + "The image should be colorful, and filled with delightful details to capture a child's imagination. Use friendly characters, and a cheerful atmosphere that fits perfectly in a storybook for kids.";
-            String imageUrl = dalleService.generateImage(prompt);
-            System.out.println("imageUrl = " + imageUrl);
-            StoryPart part = new StoryPart(i + 1, chunks[i], story, imageUrl );
+            StoryPart part = new StoryPart(i + 1, chunks[i], story );
             parts.add(part);
         }
         story.setChunks(parts);
+        String prompt = "Generate a children's book illustration with this hero: " + body.hero() +
+                "The image should be friendly";
 
+        String imageUrl = dalleService.generateImage(prompt);
+        System.out.println("imageUrl = " + imageUrl);
+        byte[] imageBytes = downloadImageAsBytes(imageUrl);
+        String finalFileName = supabase.saveImageToBucket(imageBytes,title);
+
+        story.setImageUrl(finalFileName);
         Story savedStory = storyService.saveStory(story);
-        StoryDTO storyDTO = new StoryDTO(savedStory.getId(), savedStory.getTitle());
+        StoryDTO storyDTO = new StoryDTO(savedStory.getId(), savedStory.getTitle(), story.getImageUrl());
         return ResponseEntity.ok(storyDTO);
 
     }
@@ -102,6 +118,14 @@ public class StoryController {
         }
         return chunks;
     }
+
+    private byte[] downloadImageAsBytes(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+        try (InputStream inputStream = url.openStream()) {
+            return inputStream.readAllBytes();
+        }
+    }
+
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<StoryGalleryDto>> getStoryDisplayDTOsByUserId(@PathVariable String userId) {

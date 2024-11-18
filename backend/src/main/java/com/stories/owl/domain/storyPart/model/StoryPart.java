@@ -21,14 +21,10 @@ public class StoryPart {
     @JoinColumn(name="story_id")
     private Story story;
 
-    @Column(columnDefinition = "TEXT")
-    private String imageUrl;
-
-    public StoryPart(int partNumber, String text, Story story, String imageUrl) {
+    public StoryPart(int partNumber, String text, Story story) {
         this.partNumber = partNumber;
         this.text = text;
         this.story = story;
-        this.imageUrl = imageUrl;
     }
 
     public StoryPart() {

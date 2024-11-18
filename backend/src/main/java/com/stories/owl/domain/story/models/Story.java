@@ -22,5 +22,6 @@ public class Story {
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<StoryPart> chunks;
 
-
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl;
 }

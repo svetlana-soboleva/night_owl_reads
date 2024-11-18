@@ -1,3 +1,28 @@
+spring:
+  http:
+    client:
+      connect-timeout: 30s
+      read-timeout: 120s
+  application:
+    name: owl
+  ai:
+    openai:
+      chat:
+        options:
+          model: gpt-4o
+      # Line for the images
+      api-key: ${openai.api.key}
+  datasource:
+    url: ${DB_BASE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  config:
+    import: optional:file:.env[.properties]
 gpt:
   prompt-template: |
     I will provide you with 5 words, and I would like you to write me 
@@ -8,3 +33,4 @@ gpt:
 
   api-url: ${openai.api.url}
   model: ${openai.model}
+

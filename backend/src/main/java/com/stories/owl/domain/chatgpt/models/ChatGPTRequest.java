@@ -1,4 +1,4 @@
-package com.stories.owl.domain.chatGPT.models;
+package com.stories.owl.domain.chatgpt.models;
 
 import lombok.Data;
 

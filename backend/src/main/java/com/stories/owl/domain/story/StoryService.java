@@ -29,9 +29,7 @@ public class StoryService {
                 .map(story -> new StoryGalleryDto(
                         story.getId(),
                         story.getTitle(),
-                        story.getChunks().stream()
-                                .map(StoryPart::getImageUrl)
-                                .toList()
+                        "https://jjyekqzhbwgmkysuhktm.supabase.co/storage/v1/object/public/" + story.getImageUrl()
                 ))
                 .toList();
     }

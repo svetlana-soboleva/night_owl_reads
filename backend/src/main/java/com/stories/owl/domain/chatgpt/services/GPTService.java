@@ -1,7 +1,7 @@
-package com.stories.owl.domain.chatGPT.services;
+package com.stories.owl.domain.chatgpt.services;
 
-import com.stories.owl.domain.chatGPT.models.ChatGPTRequest;
-import com.stories.owl.domain.chatGPT.models.ChatGptResponse;
+import com.stories.owl.domain.chatgpt.models.ChatGPTRequest;
+import com.stories.owl.domain.chatgpt.models.ChatGptResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
