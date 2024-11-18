@@ -77,11 +77,11 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
           type="text"
           className="grow"
           placeholder="How did they feel?"
-          {...register("emotions")}
+          {...register("emotion")}
         />
       </label>
-      {errors.emotions && (
-        <p className="text-white text-sm">{errors.emotions.message}</p>
+      {errors.emotion && (
+        <p className="text-white text-sm">{errors.emotion.message}</p>
       )}
       <button type="submit" className="btn btn-active btn-secondary">
         Generate Story

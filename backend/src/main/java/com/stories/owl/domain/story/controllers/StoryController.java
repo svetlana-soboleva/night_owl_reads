@@ -1,5 +1,6 @@
 package com.stories.owl.domain.story.controllers;
 
+import com.stories.owl.domain.Dalle.services.DalleService;
 import com.stories.owl.domain.chatGPT.services.GPTService;
 import com.stories.owl.domain.story.StoryService;
 import com.stories.owl.domain.story.dtos.StoryDTO;
@@ -24,14 +25,18 @@ public class StoryController {
     private final GPTService gptService;
     private final StoryService storyService;
     private final UserService userService;
+    private final DalleService dalleService;
  
 
     public StoryController(@Autowired GPTService gptService,
                            @Autowired StoryService storyService,
-                           @Autowired UserService userService) {
+                           @Autowired UserService userService,
+                           @Autowired DalleService dalleService
+                           ) {
         this.gptService = gptService;
         this.storyService = storyService;
         this.userService = userService;
+        this.dalleService = dalleService;
     }
 
     @PostMapping("/generate/{id}")
@@ -42,7 +47,7 @@ public class StoryController {
             user.setId(id);
             user = userService.save(user);
         }
-
+        System.out.println("MY BODY FROM FRONTEND = " + body);
         String storyContent = gptService.generateStory(
                 body.hero(),
                 body.place(),
@@ -50,7 +55,7 @@ public class StoryController {
                 body.companion(),
                 body.emotion()
         );
-        System.out.println("storyContent = " + storyContent);
+        System.out.println("GENERATE STORY CONTENT = " + storyContent);
 
         String[] lines = storyContent.split("\n");
         String title = lines[0].trim();
@@ -65,7 +70,13 @@ public class StoryController {
 
         List<StoryPart> parts = new ArrayList<>();
         for (int i = 0; i < chunks.length; i++) {
-            StoryPart part = new StoryPart(i + 1, chunks[i], story);
+            String chunk = chunks[i];
+
+
+            String prompt = "Generate a magical children's book illustration for this part of the story: " + chunk + "The image should be colorful, and filled with delightful details to capture a child's imagination. Use friendly characters, and a cheerful atmosphere that fits perfectly in a storybook for kids.";
+            String imageUrl = dalleService.generateImage(prompt);
+            System.out.println("imageUrl = " + imageUrl);
+            StoryPart part = new StoryPart(i + 1, chunks[i], story, imageUrl );
             parts.add(part);
         }
         story.setChunks(parts);
@@ -76,6 +87,7 @@ public class StoryController {
 
     }
 
+    //re-wright
     private String[] splitIntoChunks(String body, int chunkCount) {
         String[] words = body.split(" ");
         int totalWords = words.length;

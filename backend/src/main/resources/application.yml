@@ -1,7 +1,7 @@
 gpt:
   prompt-template: |
     I will provide you with 5 words, and I would like you to write me 
-    a short tale out of those 5 words. It should be between 50 and 60 words, 
+    a short tale out of those 5 words. It should be between 50 and 70 words, 
     and it should be something clever and nice, suitable for small kids to read. 
     Give it a fitting title as well. Use a single line break to separate the title 
     from the tale. The words are: %s, %s, %s, %s, %s.

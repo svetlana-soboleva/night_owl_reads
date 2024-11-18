@@ -10,7 +10,7 @@ export const storySchema = z.object({
   place: z.string().min(2, "Place required").toLowerCase().trim(),
   companion: z.string().min(2, "Companion required").toLowerCase().trim(),
   quest: z.string().min(2, "Quest required").toLowerCase().trim(),
-  emotions: z.string().min(2, "Emotions required").toLowerCase().trim(),
+  emotion: z.string().min(2, "Emotions required").toLowerCase().trim(),
 });
 
 export type StoryInput = z.infer<typeof storySchema>;
