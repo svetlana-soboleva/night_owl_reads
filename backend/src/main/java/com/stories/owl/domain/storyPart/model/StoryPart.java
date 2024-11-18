@@ -30,4 +30,7 @@ public class StoryPart {
         this.story = story;
         this.imageUrl = imageUrl;
     }
+
+    public StoryPart() {
+    }
 }

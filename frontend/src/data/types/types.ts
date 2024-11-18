@@ -14,3 +14,8 @@ export const storySchema = z.object({
 });
 
 export type StoryInput = z.infer<typeof storySchema>;
+
+export interface StoryDTO {
+  id: number;
+  title: string;
+}

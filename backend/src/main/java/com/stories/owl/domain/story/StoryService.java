@@ -1,9 +1,13 @@
 package com.stories.owl.domain.story;
 
+import com.stories.owl.domain.story.dtos.StoryGalleryDto;
 import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.story.repositories.StoryRepository;
+import com.stories.owl.domain.storyPart.model.StoryPart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StoryService {
@@ -16,5 +20,19 @@ public class StoryService {
 
     public Story saveStory(Story story) {
         return repo.save(story);
+    }
+
+    public List<StoryGalleryDto> getAllStoriesByUserId(String userId){
+        List<Story> stories = repo.findAllByUser_Id(userId);
+
+        return stories.stream()
+                .map(story -> new StoryGalleryDto(
+                        story.getId(),
+                        story.getTitle(),
+                        story.getChunks().stream()
+                                .map(StoryPart::getImageUrl)
+                                .toList()
+                ))
+                .toList();
     }
 }

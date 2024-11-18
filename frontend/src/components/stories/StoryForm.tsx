@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { StoryInput, storySchema } from "@/data/types/types";
 
 interface storyFormProps {
-  onSubmit: (data: StoryInput) => void
+  onSubmit: (data: StoryInput) => void;
 }
 
 export const StoryForm = ({onSubmit} : storyFormProps) => {

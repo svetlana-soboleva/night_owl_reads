@@ -4,6 +4,7 @@ import com.stories.owl.domain.Dalle.services.DalleService;
 import com.stories.owl.domain.chatGPT.services.GPTService;
 import com.stories.owl.domain.story.StoryService;
 import com.stories.owl.domain.story.dtos.StoryDTO;
+import com.stories.owl.domain.story.dtos.StoryGalleryDto;
 import com.stories.owl.domain.story.dtos.StoryRequestDTO;
 import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.storyPart.model.StoryPart;
@@ -100,5 +101,11 @@ public class StoryController {
             chunks[i] = String.join(" ", Arrays.copyOfRange(words, start, end)).trim();
         }
         return chunks;
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<StoryGalleryDto>> getStoryDisplayDTOsByUserId(@PathVariable String userId) {
+        List<StoryGalleryDto> storyDTOs = storyService.getAllStoriesByUserId(userId);
+        return ResponseEntity.ok(storyDTOs);
     }
 }

@@ -1,5 +1,4 @@
 package com.stories.owl.domain.Dalle.services;
-import com.stories.owl.OwlApplication;
 import com.stories.owl.domain.Dalle.http.ImageGenerationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class DalleService {
             ImageResponse response = openAiImageModel.call(new ImagePrompt(
                     prompt,
                     OpenAiImageOptions.builder()
-                           .withModel("dall-e-2")
+                            .withModel("dall-e-2")
                             .withQuality("hd")
                             .withN(1)
                             .withHeight(512)

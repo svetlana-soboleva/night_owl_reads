@@ -4,7 +4,7 @@ import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Loading } from "../../../components/loading/LoadingCard";
+
 import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
 
 export const Route = createFileRoute("/profile/$profileId/")({

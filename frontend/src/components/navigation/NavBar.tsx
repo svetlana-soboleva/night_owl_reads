@@ -13,6 +13,7 @@ export const NavBar = () => {
         <SignedIn>
           <Link
             to={routes.stories(userId!)}
+            params={{profileId: userId }}
             className="btn btn-ghost text-xl [&.active]:text-amber-300"
           >
             My stories
