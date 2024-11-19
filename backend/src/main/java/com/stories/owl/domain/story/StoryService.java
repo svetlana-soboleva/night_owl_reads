@@ -49,4 +49,9 @@ public class StoryService {
 
         );
     }
+
+    public void deleteStoryById(Long id){
+      repo.deleteById(id);
+    }
+
 }

@@ -141,4 +141,9 @@ public class StoryController {
         return ResponseEntity.ok().body(story);
 
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteStory(@PathVariable Long id) {
+        return ResponseEntity.noContent().build();
+    }
 }

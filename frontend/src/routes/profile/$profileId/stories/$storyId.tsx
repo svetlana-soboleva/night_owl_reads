@@ -1,3 +1,4 @@
+import { ErrorBadge } from "@/components/badge/ErrorBadge";
 import { LoadingStory } from "@/components/loading/LoadingStory";
 import { StoryPage } from "@/components/stories/StoryPage";
 import { getStoryById } from "@/data/api";
@@ -31,7 +32,7 @@ function RouteComponent() {
   }
 
   if (isError) {
-    return <div>Error loading story. Please try again later.</div>;
+    return <ErrorBadge/>
   }
 
   if (story) {

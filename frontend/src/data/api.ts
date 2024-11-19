@@ -6,8 +6,8 @@ export const generateStory = async (payload: StoryInput, userId: string) => {
   const response = await fetch(`${BASE_DEV_URL}/generate/${userId}`, {
     method: "POST",
     headers: {
-        "Content-Type": "application/json", 
-      },
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(payload),
   });
   if (!response.ok) {
@@ -18,7 +18,7 @@ export const generateStory = async (payload: StoryInput, userId: string) => {
   return response.json();
 };
 
-export const getAllStoriesByUserId = async(userId: string) => {
+export const getAllStoriesByUserId = async (userId: string) => {
   try {
     const response = await fetch(`${BASE_DEV_URL}/user/${userId}`);
     if (!response.ok) {
@@ -31,10 +31,10 @@ export const getAllStoriesByUserId = async(userId: string) => {
     console.error("Error fetching stories:", error);
     throw error;
   }
-}
+};
 
-export const getStoryById = async(storyId : number) => {
-  try{
+export const getStoryById = async (storyId: number) => {
+  try {
     const response = await fetch(`${BASE_DEV_URL}/user/stories/${storyId}`, {
       method: "GET",
       headers: {
@@ -51,4 +51,16 @@ export const getStoryById = async(storyId : number) => {
   } catch (error) {
     throw new Error(`Error to get the story ${error}`);
   }
-}
+};
+
+export const deleteStoryById = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_DEV_URL}/delete/${id}`);
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.statusText}`);
+    }
+  } catch (error) {
+    throw new Error(`Error to get the story ${error}`);
+  }
+};
