@@ -4,8 +4,8 @@ import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ColorfullSpinners } from "@/components/loading/ColorfullSpinners";
 import { ErrorBadge } from "@/components/badge/ErrorBadge";
+import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
 
 export const Route = createFileRoute("/profile/$profileId/")({
   component: ProfileComponent,
@@ -28,7 +28,7 @@ function ProfileComponent() {
   };
 
   if (isError) return <ErrorBadge/>;
-  if (isPending) return <ColorfullSpinners />;
+  if (isPending) return <LoadingBubbles />;
   // if(data) return <div>redirect</div>
 
   return (

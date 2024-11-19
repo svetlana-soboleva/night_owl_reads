@@ -1,18 +1,28 @@
 import { Story } from "@/data/types/types";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 interface Props {
   story: Story;
   profileId: string;
 }
 export const StoryCard = ({ story, profileId }: Props) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <div className="card bg-base-100 shadow-xl h-64 flex flex-col justify-between">
       <figure className="h-32 overflow-hidden">
+        {!imageLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+            <div className="loader border-t-2 border-b-2 border-gray-600 w-6 h-6 rounded-full animate-spin"></div>
+          </div>
+        )}
         <img
           src={story.imageUrls}
           alt="Story"
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded(true)}
         />
       </figure>
       <div className="card-body p-4 flex flex-col justify-between">

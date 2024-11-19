@@ -2,7 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { useAuth } from "@clerk/clerk-react";
 import { routeTree } from "./routeTree.gen";
 import { Providers } from "./utils/providers";
-import { ColorfullSpinners } from "./components/loading/ColorfullSpinners";
+import { LoadingBubbles } from "./components/loading/LoadingBubbles";
 
 const router = createRouter({
   routeTree,
@@ -26,7 +26,7 @@ export const App = () => {
 const RouterWrapper = () => {
   const authentication = useAuth();
   if (!authentication.isLoaded) {
-    return <ColorfullSpinners/>
+    return <LoadingBubbles/>
   }
   return <RouterProvider router={router} context={{ authentication }} />;
 };

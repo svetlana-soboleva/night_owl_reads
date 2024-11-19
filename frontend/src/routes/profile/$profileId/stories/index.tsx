@@ -1,5 +1,5 @@
 import { ErrorBadge } from "@/components/badge/ErrorBadge";
-import { ColorfullSpinners } from "@/components/loading/ColorfullSpinners";
+import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
 import { StoryCard } from "@/components/stories/StoryCard";
 import { getAllStoriesByUserId } from "@/data/api";
 import { Story } from "@/data/types/types";
@@ -24,7 +24,7 @@ function StoriesComponent() {
   });
 
   if (isLoading) {
-    return <ColorfullSpinners />;
+    return <LoadingBubbles />;
   }
 
   if (isError) {

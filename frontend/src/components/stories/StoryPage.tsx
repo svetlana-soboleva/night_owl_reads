@@ -1,6 +1,7 @@
 import { SingleStoryPage } from "@/data/types/types";
 import { StoryPartsCarousel } from "./StoryPartsCarousel";
 import { useState } from "react";
+import { LoadingBubbles } from "../loading/LoadingBubbles";
 
 interface Props {
   story: SingleStoryPage;
@@ -11,7 +12,11 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   if (isLoading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="text-center">
+        <LoadingBubbles />
+      </div>
+    );
   }
 
   if (!story) {
@@ -20,9 +25,11 @@ export const StoryPage = ({ story, isLoading }: Props) => {
 
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
-      <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto">
+      <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto relative">
         {!imageLoaded && (
-          <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl" />
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+            <div className="loader border-t-2 border-b-2 border-gray-600 w-6 h-6 rounded-full animate-spin"></div>
+          </div>
         )}
         <img
           src={story.imageUrls}
@@ -31,6 +38,7 @@ export const StoryPage = ({ story, isLoading }: Props) => {
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
         />
       </figure>
 
