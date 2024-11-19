@@ -5,7 +5,7 @@ import {routes} from '@/utils/routes'
 export const NavBar = () => {
   const {userId} = useAuth()
   return (
-    <div className="navbar backdrop-blur-md bg-transparent  border-2 border-yellow-500 border- rounded-2xl p-4">
+    <div className="sticky top-0 z-10 navbar backdrop-blur-md bg-transparent  border-2 border-yellow-500 border- rounded-2xl p-4">
       <div className="flex-1 ">
         <Link to={routes.home} className="btn btn-ghost text-xl">
           <img src="/owl4.png" alt="Home Icon" width="40" height="40" />

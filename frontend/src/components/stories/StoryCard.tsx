@@ -17,7 +17,7 @@ export const StoryCard = ({ story, profileId }: Props) => {
       </figure>
       <div className="card-body p-4 flex flex-col justify-between">
         <h3 className="text-lg font-bold text-ellipsis overflow-hidden whitespace-nowrap">
-          {story.title}
+          {story.title.replace(/([A-Z])/g, ' $1').trim()}
         </h3>
         <div className="card-actions justify-end">
           <Link to={`/profile/${profileId}/stories/${story.id}`}>

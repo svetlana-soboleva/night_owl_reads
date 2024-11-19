@@ -19,22 +19,32 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   }
 
   return (
-    <div className="card bg-base-100 mt-4 shadow-xl flex flex-col lg:flex-row">
-      <figure className="px-10 pt-10">
+    <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-center items-center ">
+      <figure className="p-8 lg:w-1/2 h-1/2 lg:h-full">
+        {!imageLoaded && (
+          <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl" />
+        )}
         <img
           src={story.imageUrls}
           alt={story.title}
-          className={`rounded-xl transition-opacity duration-500 ${
+          className={`w-full h-full object-cover rounded-xl transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setImageLoaded(true)}
         />
       </figure>
-      <div className="card-body items-center text-center gap-8">
-        <h2 className="card-title text-3xl text-purple-300">{story.title}</h2>
+      <div className="card-body lg:w-1/2 h-1/2 lg:h-full flex flex-col justify-center md:justify-between lg:justify-between gap-4 lg:m-4 items-center text-center">
+        <h2 className="card-title text-2xl md:text-4xl text-purple-500 lg:text-4xl lg:mt-8">
+          {story.title.replace(/([A-Z])/g, " $1").trim()}
+        </h2>
         <StoryPartsCarousel chunks={story.chunks} />
-        <div className="card-actions">
-          <button className="btn btn-secondary">Back</button>
+        <div className="card-actions self-center lg:self-end">
+          <button
+            className="btn btn-secondary"
+            onClick={() => window.history.back()}
+          >
+            Back
+          </button>
         </div>
       </div>
     </div>
