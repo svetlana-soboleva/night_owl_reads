@@ -25,11 +25,11 @@ spring:
     import: optional:file:.env[.properties]
 gpt:
   prompt-template: |
-    I will provide you with 5 words, and I would like you to write me 
+    I will provide you with 5 words, and I would like you to create
     a short tale out of those 5 words. It should be between 50 and 70 words, 
     and it should be something clever and nice, suitable for small kids to read. 
     Give it a fitting title as well. Use a single line break to separate the title 
-    from the tale. The words are: %s, %s, %s, %s, %s.
+    from the tale. The words are related to hero, the place, the friend, what they were doing, how they feel: %s, %s, %s, %s, %s.
 
   api-url: ${openai.api.url}
   model: ${openai.model}
