@@ -3,8 +3,9 @@ package com.stories.owl.domain.story.controllers;
 import com.stories.owl.domain.dalle.services.DalleService;
 import com.stories.owl.domain.chatgpt.services.GPTService;
 import com.stories.owl.domain.story.StoryService;
+import com.stories.owl.domain.story.dtos.SingleStoryDTO;
 import com.stories.owl.domain.story.dtos.StoryDTO;
-import com.stories.owl.domain.story.dtos.StoryGalleryDto;
+import com.stories.owl.domain.story.dtos.StoryGalleryDTO;
 import com.stories.owl.domain.story.dtos.StoryRequestDTO;
 import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.storyPart.model.StoryPart;
@@ -20,7 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -67,13 +67,15 @@ public class StoryController {
 
         String[] lines = storyContent.split("\n");
         String title = lines[0].trim();
-        //remove title if starts with Title
+        //remove title if starts with "Title"
         if (title.startsWith("Title: ")) {
             title = title.replaceFirst("Title: ", "").trim();
         }
-        //remove white spaces to save url
-        title = title.replaceAll(" ", "");
         title = title.replaceAll("[^a-zA-Z0-9]", "");
+        //remove white spaces to save url
+
+        String titleForSupabaseUrl = title.replaceAll(" ", "");
+
 
         String storyBody = String.join(" ", Arrays.copyOfRange(lines, 1, lines.length)).trim();
 
@@ -95,7 +97,7 @@ public class StoryController {
         String imageUrl = dalleService.generateImage(prompt);
         System.out.println("imageUrl = " + imageUrl);
         byte[] imageBytes = downloadImageAsBytes(imageUrl);
-        String finalFileName = supabase.saveImageToBucket(imageBytes,title);
+        String finalFileName = supabase.saveImageToBucket(imageBytes,titleForSupabaseUrl);
 
         story.setImageUrl(finalFileName);
         Story savedStory = storyService.saveStory(story);
@@ -128,8 +130,15 @@ public class StoryController {
 
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<StoryGalleryDto>> getStoryDisplayDTOsByUserId(@PathVariable String userId) {
-        List<StoryGalleryDto> storyDTOs = storyService.getAllStoriesByUserId(userId);
+    public ResponseEntity<List<StoryGalleryDTO>> getStoryDisplayDTOsByUserId(@PathVariable String userId) {
+        List<StoryGalleryDTO> storyDTOs = storyService.getAllStoriesByUserId(userId);
         return ResponseEntity.ok(storyDTOs);
+    }
+
+    @GetMapping("/user/stories/{storyId}")
+    public ResponseEntity<SingleStoryDTO> getStoryById(@PathVariable Long storyId){
+        SingleStoryDTO story = storyService.getStoryById(storyId);
+        return ResponseEntity.ok().body(story);
+
     }
 }

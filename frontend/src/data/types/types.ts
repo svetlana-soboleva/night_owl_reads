@@ -19,3 +19,21 @@ export interface StoryDTO {
   id: number;
   title: string;
 }
+
+export interface Story {
+  id: number,
+  imageUrls: string,
+  title: string,
+}
+
+export interface Chunk {
+  id: number,
+  text: string
+}
+
+export interface SingleStoryPage {
+  id: number,
+  imageUrls: string,
+  title: string,
+  chunks: Chunk[]
+}

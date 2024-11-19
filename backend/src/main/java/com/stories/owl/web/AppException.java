@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class AppException {
 
@@ -15,4 +18,10 @@ public class AppException {
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Image generation failed: " + ex.getMessage());
     }
+
+    @ExceptionHandler({IllegalStateException.class, NoSuchElementException.class})
+    protected ResponseEntity<Void> handleNotFoundExceptions() {
+        return ResponseEntity.notFound().build();
+    }
+
 }

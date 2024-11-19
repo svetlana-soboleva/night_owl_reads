@@ -4,8 +4,8 @@ import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-
-import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
+import { ColorfullSpinners } from "@/components/loading/ColorfullSpinners";
+import { ErrorBadge } from "@/components/badge/ErrorBadge";
 
 export const Route = createFileRoute("/profile/$profileId/")({
   component: ProfileComponent,
@@ -16,10 +16,9 @@ function ProfileComponent() {
   const { userId } = useAuth();
   const navigate = useNavigate(); 
 
-  const { mutate, isPending, isError, data } = useMutation({
+  const { mutate, isPending, isError} = useMutation({
     mutationFn: (payload) => generateStory(payload, userId),
     onSuccess: (data) => {
-      //@ts-ignore
       navigate(`/profile/${userId}/stories/${data.id}`);
     },
   });
@@ -28,9 +27,9 @@ function ProfileComponent() {
     mutate(formData);
   };
 
-  if (isError) return <div>Something went wrong</div>;
-  if (isPending) return <LoadingBubbles />;
-  if(data) return <div>redirect</div>
+  if (isError) return <ErrorBadge/>;
+  if (isPending) return <ColorfullSpinners />;
+  // if(data) return <div>redirect</div>
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">

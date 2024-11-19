@@ -16,12 +16,6 @@ public class SupabaseService {
     @Value("${SUPABASE_KEY}")
     private String supabaseKey;
 
-//    private final SupabaseClient supabase;
-
-//    public SupabaseService() {
-//        this.supabase = new SupabaseClient(supabaseUrl, supabaseKey);
-//    }
-
     public String saveImageToBucket( byte[] img, String name) throws IOException {
         SupabaseClient supabase = new SupabaseClient(
                 supabaseUrl,
