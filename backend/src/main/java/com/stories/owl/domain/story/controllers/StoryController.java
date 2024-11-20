@@ -50,20 +50,27 @@ public class StoryController {
     @PostMapping("/generate/{id}")
     public ResponseEntity<StoryDTO> addStory(@PathVariable String id, @RequestBody StoryRequestDTO body) throws IOException {
         User user = userService.getUserById(id);
+
         if(user == null){
             user = new User();
             user.setId(id);
             user = userService.save(user);
         }
-        System.out.println("MY BODY FROM FRONTEND = " + body);
-        String storyContent = gptService.generateStory(
-                body.hero(),
-                body.place(),
-                body.quest(),
-                body.companion(),
-                body.emotion()
-        );
-        System.out.println("GENERATE STORY CONTENT = " + storyContent);
+
+//        String storyContent = gptService.generateStory(
+//                body.language(),
+//                body.hero(),
+//                body.place(),
+//                body.quest(),
+//                body.companion(),
+//                body.emotion()
+//        );
+        String storyContent = """
+                Title: The Brave Crab of the Forest
+
+                In the deep forest, a brave crab named Coby met his friend, a wise owl. They were searching for food when they stumbled upon a vast plain. As they wandered, Coby's stomach growled - he was hungry. But with the help of his friend, they found a delicious berry bush. Together, they feasted and felt grateful for their friendship.
+                """;
+        //System.out.println("GENERATE STORY CONTENT = " + storyContent);
 
         String[] lines = storyContent.split("\n");
         String title = lines[0].trim();
@@ -71,10 +78,8 @@ public class StoryController {
         if (title.startsWith("Title: ")) {
             title = title.replaceFirst("Title: ", "").trim();
         }
-        title = title.replaceAll("[^a-zA-Z0-9]", "");
-        //remove white spaces to save url
-
-        String titleForSupabaseUrl = title.replaceAll(" ", "");
+        //keep space!
+        title = title.replaceAll("[^a-zA-Z0-9 ]", "");
 
 
         String storyBody = String.join(" ", Arrays.copyOfRange(lines, 1, lines.length)).trim();
@@ -84,6 +89,7 @@ public class StoryController {
         Story story = new Story();
         story.setUser(user);
         story.setTitle(title);
+        story.setLanguage(body.language());
 
         List<StoryPart> parts = new ArrayList<>();
         for (int i = 0; i < chunks.length; i++) {
@@ -91,18 +97,21 @@ public class StoryController {
             parts.add(part);
         }
         story.setChunks(parts);
+
         String prompt = "Generate a children's book illustration with this hero: " + body.hero() +
                 "The image should be friendly";
 
-        String imageUrl = dalleService.generateImage(prompt);
+        String imageUrl = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";//dalleService.generateImage(prompt);
         System.out.println("imageUrl = " + imageUrl);
         byte[] imageBytes = downloadImageAsBytes(imageUrl);
+        //remove white spaces to save url
+        String titleForSupabaseUrl = title.replaceAll(" ", "");
         String finalFileName = supabase.saveImageToBucket(imageBytes,titleForSupabaseUrl);
 
         story.setImageUrl(finalFileName);
         Story savedStory = storyService.saveStory(story);
-        StoryDTO storyDTO = new StoryDTO(savedStory.getId(), savedStory.getTitle(), story.getImageUrl());
-        return ResponseEntity.ok(storyDTO);
+        StoryDTO storyDTO = new StoryDTO(savedStory.getId(), savedStory.getTitle(), story.getImageUrl(), story.getLanguage());
+        return ResponseEntity.ok().body(storyDTO);
 
     }
 
@@ -142,8 +151,14 @@ public class StoryController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteStory(@PathVariable Long id) {
+    //test if works
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteStory(@RequestBody int id) {
+        Long storyId = (long) id;
+        storyService.deleteStoryById(storyId);
         return ResponseEntity.noContent().build();
     }
+
+//    @PostMapping("/update-title/{id}")
+
 }

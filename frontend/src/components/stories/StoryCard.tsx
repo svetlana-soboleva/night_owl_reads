@@ -2,13 +2,30 @@ import { Story } from "@/data/types/types";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { DeleteButton } from "../button/DeleteButton";
+import { deleteStoryById } from "@/data/api";
+import {  useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   story: Story;
   profileId: string;
 }
+
+
 export const StoryCard = ({ story, profileId }: Props) => {
+  const queryClient = useQueryClient()
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteStoryById(id),
+    onSuccess: () => {
+      console.log("The mutation is sucessful!");
+      queryClient.invalidateQueries({ queryKey: ["user_stories"] });
+      
+      
+    },
+  
+  });
+
   return (
     <div className="card bg-base-100 shadow-xl h-64 flex flex-col justify-between">
       <figure className="h-32 overflow-hidden">
@@ -31,7 +48,13 @@ export const StoryCard = ({ story, profileId }: Props) => {
           {story.title.replace(/([A-Z])/g, " $1").trim()}
         </h3>
         <div className="card-actions justify-between">
-          <DeleteButton />
+          {/* <button
+            className="hover:cursor-pointer"
+            onClick={() => deleteMutation.mutate(story.id)}
+          >
+            Delete
+          </button> */}
+          <DeleteButton onClick={() => deleteMutation.mutate(story.id)} />
           <Link to={`/profile/${profileId}/stories/${story.id}`}>
             <button className="btn btn-secondary">Read</button>
           </Link>

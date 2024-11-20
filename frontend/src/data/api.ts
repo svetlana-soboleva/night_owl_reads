@@ -10,7 +10,10 @@ export const generateStory = async (storyRequest: StoryRequest) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(storyRequest.payload),
+      body: JSON.stringify({
+        language: storyRequest.language,
+        ...storyRequest.payload, 
+      }),
     }
   );
   if (!response.ok) {
@@ -59,12 +62,22 @@ export const getStoryById = async (storyId: number) => {
 
 export const deleteStoryById = async (id: number) => {
   try {
-    const response = await fetch(`${BASE_DEV_URL}/delete/${id}`);
+    const response = await fetch(`${BASE_DEV_URL}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(id),
+    });
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || `Error: ${response.statusText}`);
     }
+    console.log("Deleted");
+   
   } catch (error) {
-    throw new Error(`Error to get the story ${error}`);
+    throw new Error(`Error deleting the story: ${error}`);
   }
 };
+

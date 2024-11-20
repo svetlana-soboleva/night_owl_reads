@@ -4,10 +4,11 @@ import { Word } from "./Word";
 
 interface Props {
   chunks: Chunk[];
+  language: string;
 }
 
-export const StoryPartsCarousel = ({ chunks }: Props) => {
-  const { speakWord } = useSpeech();
+export const StoryPartsCarousel = ({ chunks, language }: Props) => {
+  const { speakWord } = useSpeech({ language });
 
   return (
     <div className="bg-neutral rounded-box p-4 flex flex-col gap-6">

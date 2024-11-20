@@ -12,13 +12,16 @@ export const Route = createFileRoute("/profile/$profileId/stories/")({
 
 function StoriesComponent() {
   const { profileId } = Route.useParams();
+
   const {
     data: stories,
     isLoading,
     isError,
   } = useQuery<Story[]>({
-    queryKey: ["userStories", profileId],
-    queryFn: () => getAllStoriesByUserId(profileId),
+    queryKey: ["user_stories"],
+    queryFn: () => {
+      console.log("Got all stories")
+      return getAllStoriesByUserId(profileId)},
 
     enabled: !!profileId,
   });
@@ -29,6 +32,10 @@ function StoriesComponent() {
 
   if (isError) {
     return <ErrorBadge />;
+  }
+
+  if(stories && stories?.length <= 0){
+    return "No stories"
   }
 
   return (

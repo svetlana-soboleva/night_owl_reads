@@ -24,8 +24,8 @@ public class GPTService {
         this.restTemplate = restTemplate;
     }
 
-    public String generateStory(String hero, String place, String quest, String companion, String emotion){
-        String prompt = String.format(promptTemplate, hero, place, quest, companion, emotion );
+    public String generateStory(String language, String hero, String place, String quest, String companion, String emotion){
+        String prompt = String.format(promptTemplate, language, hero, place, quest, companion, emotion );
         ChatGPTRequest request = new ChatGPTRequest(model, prompt);
 
         ChatGptResponse response = restTemplate.postForObject(apiURL, request, ChatGptResponse.class);

@@ -1,4 +1,4 @@
 package com.stories.owl.domain.story.dtos;
 
-public record StoryDTO( Long id, String title, String imageUrl) {
+public record StoryDTO( Long id, String title, String imageUrl, String language) {
 }

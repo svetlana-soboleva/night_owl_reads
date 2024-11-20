@@ -5,9 +5,7 @@ import com.stories.owl.domain.story.dtos.StoryGalleryDTO;
 import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.story.repositories.StoryRepository;
 import com.stories.owl.domain.storyPart.dtos.StoryPartDTO;
-import com.stories.owl.web.AppException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +41,7 @@ public class StoryService {
         return new SingleStoryDTO(story.getId(),
                 story.getTitle(),
                 "https://jjyekqzhbwgmkysuhktm.supabase.co/storage/v1/object/public/" + story.getImageUrl(),
+                story.getLanguage(),
                 story.getChunks().stream()
                         .map((chunk) -> new StoryPartDTO(chunk.getId(), chunk.getText())
                         ).toList()

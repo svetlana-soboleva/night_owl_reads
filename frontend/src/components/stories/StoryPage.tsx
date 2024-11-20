@@ -10,7 +10,7 @@ interface Props {
 
 export const StoryPage = ({ story, isLoading }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  console.log(story);
   if (isLoading) {
     return (
       <div className="text-center">
@@ -44,9 +44,10 @@ export const StoryPage = ({ story, isLoading }: Props) => {
 
       <div className="card-body px-4 lg:px-8 flex flex-col justify-center lg:justify-between items-center lg:items-end lg:w-1/2">
         <h2 className="card-title text-purple-500 text-2lg md:text-xl lg:text-2xl text-center lg:text-left mb-4 uppercase abeezee-regular-italic ">
-          {story.title.replace(/([A-Z])/g, " $1").trim()}
+          {story.title}
+          {/* .replace(/([A-Z])/g, " $1").trim() */}
         </h2>
-        <StoryPartsCarousel chunks={story.chunks} />
+        <StoryPartsCarousel language={story.language} chunks={story.chunks} />
         <div className="card-actions mt-4">
           <button
             className="btn btn-secondary"

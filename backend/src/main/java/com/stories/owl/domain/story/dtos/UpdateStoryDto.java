@@ -1,2 +1,4 @@
-package com.stories.owl.domain.story.dtos;public class UpdateStoryDto {
+package com.stories.owl.domain.story.dtos;
+
+public record UpdateStoryDto(String newTitle) {
 }

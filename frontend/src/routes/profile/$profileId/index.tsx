@@ -2,20 +2,26 @@ import { StoryForm } from "@/components/stories/StoryForm";
 import { generateStory } from "@/data/api";
 import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { useMutation } from "@tanstack/react-query";
+import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { ErrorBadge } from "@/components/badge/ErrorBadge";
 import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
+import { SelectLanguage } from "@/components/select/SelectLanguage";
+import { useState } from "react";
 
 export const Route = createFileRoute("/profile/$profileId/")({
   component: ProfileComponent,
 });
 
+
+
 function ProfileComponent() {
+  const queryClient = useQueryClient()
   const { user } = useUser();
   const { userId } = useAuth();
   const router = useRouter();
-
+  const [language, setLanguage] = useState("en"); 
+  
   const { mutate, isPending, isError } = useMutation({
     // const mutation = useMutation({
     mutationFn: generateStory,
@@ -27,6 +33,7 @@ function ProfileComponent() {
     },
     onSuccess: (data) => {
       console.log("onSuccess", data.id);
+      queryClient.invalidateQueries({ queryKey: ["user_stories"] });
       router.navigate({
         to: `/profile/${userId}/stories/${data.id}`,
       });
@@ -34,17 +41,31 @@ function ProfileComponent() {
   });
 
   const handleFormSubmit = (formData: StoryInput) => {
-    mutate({ payload: formData, userId: "userid" });
+    console.log(formData)
+    mutate({ language, payload: formData, userId: userId!
+      });
     // mutation.mutate({ bla: sth });
+  };
+
+  const handleLanguageSelect = (selectedLanguage: string) => {
+    console.log(selectedLanguage)
+    setLanguage(selectedLanguage);
+    console.log("selected" + language)
   };
 
   if (isError) return <ErrorBadge />;
   if (isPending) return <LoadingBubbles />;
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <h1 className="badge badge-ghost p-4">Hello {user?.firstName}!</h1>
-      <StoryForm onSubmit={handleFormSubmit} />
+    <div className="flex flex-col gap-8 mt-4 w-full">
+     <div className="flex justify-end">
+     <SelectLanguage onLanguageSelect={handleLanguageSelect}/>
+     </div>
+     <div className="flex flex-col justify-center items-center gap-4">
+     <h1 className="badge badge-ghost p-4">Hello {user?.firstName}!</h1>
+     <StoryForm onSubmit={handleFormSubmit} />
+     </div>
+      
     </div>
   );
 }

@@ -4,5 +4,5 @@ import com.stories.owl.domain.storyPart.dtos.StoryPartDTO;
 
 import java.util.List;
 
-public record SingleStoryDTO(Long id, String title, String imageUrls, List<StoryPartDTO> chunks) {
+public record SingleStoryDTO(Long id, String title, String imageUrls, String language,  List<StoryPartDTO> chunks) {
 }

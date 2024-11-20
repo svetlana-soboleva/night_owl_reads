@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useSpeech = () => {
+export const useSpeech = ({ language }: { language: string }) => {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const synth = window.speechSynthesis;
 
@@ -16,6 +16,8 @@ export const useSpeech = () => {
     }
   }, [synth]);
 
+  // console.log(voices)
+
   const speakWord = (word: string) => {
     if (synth.speaking) {
       return;
@@ -25,7 +27,7 @@ export const useSpeech = () => {
       const speakText = new SpeechSynthesisUtterance(word);
 
       const englishVoice =
-        voices.find((v) => v.lang.startsWith("en")) || voices[0];
+        voices.find((v) => v.lang.startsWith(language)) || voices[0];
       speakText.voice = englishVoice;
 
       speakText.rate = 1;
