@@ -9,7 +9,6 @@ interface Props {
 
 export const StoryPartsCarousel = ({ chunks, language }: Props) => {
   const { speakWord } = useSpeech({ language });
-
   return (
     <div className="bg-neutral rounded-box p-4 flex flex-col gap-6">
       {chunks.map((chunk, index) => {
@@ -19,7 +18,7 @@ export const StoryPartsCarousel = ({ chunks, language }: Props) => {
             key={index}
             className="bg-base-100 p-4 rounded-lg shadow-lg flex flex-col"
           >
-            <div className="uppercase flex flex-wrap gap-1 justify-center">
+            <div className="uppercase flex text-gray-100 flex-wrap gap-1 justify-center">
               {words.map((word, wordIndex) => (
                 <Word key={wordIndex} word={word} onSpeak={speakWord} />
               ))}

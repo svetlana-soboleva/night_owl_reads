@@ -2,7 +2,7 @@ import { SingleStoryPage } from "@/data/types/types";
 import { StoryPartsCarousel } from "./StoryPartsCarousel";
 import { useState } from "react";
 import { LoadingBubbles } from "../loading/LoadingBubbles";
-
+import { useSpeech } from "@/hooks/useSpeech";
 
 interface Props {
   story: SingleStoryPage;
@@ -11,7 +11,14 @@ interface Props {
 
 export const StoryPage = ({ story, isLoading }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  console.log(story);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const language = story.language;
+  const { speakWord } = useSpeech({ language });
+
+  let text = "";
+  story.chunks.forEach((c) => (text += c.text));
+  console.log(text + "text");
+
   if (isLoading) {
     return (
       <div className="text-center">
@@ -24,8 +31,16 @@ export const StoryPage = ({ story, isLoading }: Props) => {
     return <div>No story data available.</div>;
   }
 
+  const toggleReadAloud = () => {
+    setIsPlaying(!isPlaying);
+    if(isPlaying){
+      speakWord(text)
+    } else window.speechSynthesis.cancel()
+  };
+
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
+      <div className="btn btn-secondary w-20 m-2" onClick={toggleReadAloud}>READ </div>
       <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto relative">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
@@ -41,11 +56,10 @@ export const StoryPage = ({ story, isLoading }: Props) => {
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageLoaded(true)}
         />
-        
       </figure>
 
       <div className="card-body px-4 lg:px-8 flex flex-col justify-center lg:justify-between items-center lg:items-end lg:w-1/2">
-        <h2 className="card-title text-purple-500 text-2lg md:text-xl lg:text-2xl text-center lg:text-left mb-4 uppercase">
+        <h2 className="card-title text-purple-500 text-2lg md:text-xl lg:text-2xl text-center lg:text-left mb-4 uppercase tracking-widest">
           {story.title}
           {/* .replace(/([A-Z])/g, " $1").trim() */}
         </h2>

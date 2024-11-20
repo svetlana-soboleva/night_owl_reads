@@ -5,6 +5,7 @@ import { getAllStoriesByUserId } from "@/data/api";
 import { Story } from "@/data/types/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { P } from "node_modules/@clerk/clerk-react/dist/useAuth-DT1ot2zi.d.mts";
 
 export const Route = createFileRoute("/profile/$profileId/stories/")({
   component: StoriesComponent,
@@ -17,25 +18,32 @@ function StoriesComponent() {
     data: stories,
     isLoading,
     isError,
+    error,
   } = useQuery<Story[]>({
     queryKey: ["user_stories"],
     queryFn: () => {
-      console.log("Got all stories")
-      return getAllStoriesByUserId(profileId)},
+      console.log("Got all stories");
+      return getAllStoriesByUserId(profileId);
+    },
 
     enabled: !!profileId,
   });
 
   if (isLoading) {
-    return <LoadingBubbles />;
+    return (
+      <div className="flex flex-col justify-center gap-8 backdrop-blur-sm bg-transparent h-60">
+        <h1 className="text-2xl bg-gray-200 p-2 rounded-xl text-gray-700">Fairy dust is settling… it’ll sparkle in a moment</h1>
+        <LoadingBubbles />
+      </div>
+    );
   }
 
   if (isError) {
-    return <ErrorBadge />;
+    return <ErrorBadge error={error} />;
   }
 
-  if(stories && stories?.length <= 0){
-    return "No stories"
+  if (stories && stories?.length <= 0) {
+    return "No stories";
   }
 
   return (
