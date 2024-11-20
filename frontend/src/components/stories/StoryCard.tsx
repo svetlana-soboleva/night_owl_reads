@@ -44,7 +44,7 @@ export const StoryCard = ({ story, profileId }: Props) => {
         />
       </figure>
       <div className="card-body p-4 flex flex-col justify-between">
-        <h3 className=" text-lg font-bold text-ellipsis overflow-hidden whitespace-nowrap abeezee-regular-italic">
+        <h3 className=" text-lg text-gray-400 font-bold text-ellipsis overflow-hidden whitespace-nowrap">
           {story.title.replace(/([A-Z])/g, " $1").trim()}
         </h3>
         <div className="card-actions justify-between">
@@ -56,7 +56,7 @@ export const StoryCard = ({ story, profileId }: Props) => {
           </button> */}
           <DeleteButton onClick={() => deleteMutation.mutate(story.id)} />
           <Link to={`/profile/${profileId}/stories/${story.id}`}>
-            <button className="btn btn-secondary">Read</button>
+            <button className="btn btn-secondary uppercase">Read</button>
           </Link>
         </div>
       </div>

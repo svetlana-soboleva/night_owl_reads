@@ -6,6 +6,7 @@ import com.stories.owl.domain.story.models.Story;
 import com.stories.owl.domain.story.repositories.StoryRepository;
 import com.stories.owl.domain.storyPart.dtos.StoryPartDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.NoSuchElementException;
 public class StoryService {
 
     StoryRepository repo;
+
+    @Value("${SUPABASE_PATH_IMAGE_URL}")
+    private String subapasePath;
+
 
     public StoryService(@Autowired StoryRepository repo) {
         this.repo = repo;
@@ -31,7 +36,7 @@ public class StoryService {
                 .map(story -> new StoryGalleryDTO(
                         story.getId(),
                         story.getTitle(),
-                        "https://jjyekqzhbwgmkysuhktm.supabase.co/storage/v1/object/public/" + story.getImageUrl()
+                        subapasePath + story.getImageUrl()
                 ))
                 .toList();
     }
@@ -40,7 +45,7 @@ public class StoryService {
         Story story = repo.findById(storyId).orElseThrow(() -> new NoSuchElementException("No story found with ID: " + storyId));
         return new SingleStoryDTO(story.getId(),
                 story.getTitle(),
-                "https://jjyekqzhbwgmkysuhktm.supabase.co/storage/v1/object/public/" + story.getImageUrl(),
+                subapasePath + story.getImageUrl(),
                 story.getLanguage(),
                 story.getChunks().stream()
                         .map((chunk) -> new StoryPartDTO(chunk.getId(), chunk.getText())

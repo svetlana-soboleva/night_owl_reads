@@ -57,19 +57,19 @@ public class StoryController {
             user = userService.save(user);
         }
 
-//        String storyContent = gptService.generateStory(
-//                body.language(),
-//                body.hero(),
-//                body.place(),
-//                body.quest(),
-//                body.companion(),
-//                body.emotion()
-//        );
-        String storyContent = """
-                Title: The Brave Crab of the Forest
-
-                In the deep forest, a brave crab named Coby met his friend, a wise owl. They were searching for food when they stumbled upon a vast plain. As they wandered, Coby's stomach growled - he was hungry. But with the help of his friend, they found a delicious berry bush. Together, they feasted and felt grateful for their friendship.
-                """;
+        String storyContent = gptService.generateStory(
+                body.language(),
+                body.hero(),
+                body.place(),
+                body.quest(),
+                body.companion(),
+                body.emotion()
+        );
+//        String storyContent = """
+//                Title: The Brave Crab of the Forest
+//
+//                In the deep forest, a brave crab named Coby met his friend, a wise owl. They were searching for food when they stumbled upon a vast plain. As they wandered, Coby's stomach growled - he was hungry. But with the help of his friend, they found a delicious berry bush. Together, they feasted and felt grateful for their friendship.
+//                """;
         //System.out.println("GENERATE STORY CONTENT = " + storyContent);
 
         String[] lines = storyContent.split("\n");
@@ -100,8 +100,8 @@ public class StoryController {
 
         String prompt = "Generate a children's book illustration with this hero: " + body.hero() +
                 "The image should be friendly";
-
-        String imageUrl = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";//dalleService.generateImage(prompt);
+//"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";
+        String imageUrl = dalleService.generateImage(prompt);
         System.out.println("imageUrl = " + imageUrl);
         byte[] imageBytes = downloadImageAsBytes(imageUrl);
         //remove white spaces to save url

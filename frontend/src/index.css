@@ -6,17 +6,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-family: abeezee-regular;
+  font-family: "Gill Sans";
+  
 }
 
-.abeezee-regular {
-  font-family: "ABeeZee", sans-serif;
-  font-weight: 400;
+/* .lexend-font {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
   font-style: normal;
-}
-
-.abeezee-regular-italic {
-  font-family: "ABeeZee", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
+} */

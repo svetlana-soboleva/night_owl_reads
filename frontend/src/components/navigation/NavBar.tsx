@@ -14,7 +14,7 @@ export const NavBar = () => {
           <Link
             to={routes.stories(userId!)}
             params={{profileId: userId! }}
-            className="btn btn-ghost text-xl [&.active]:text-amber-300"
+            className="btn btn-ghost text-xl [&.active]:text-amber-300 [&.active]:shadow-[0_0_10px_#fbbf24,0_0_20px_#fbbf24]"
           >
             My stories
           </Link>
