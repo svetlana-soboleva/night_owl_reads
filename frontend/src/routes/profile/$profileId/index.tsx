@@ -23,7 +23,7 @@ function ProfileComponent() {
   const router = useRouter();
   const [language, setLanguage] = useState("en"); 
   
-  const { mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     // const mutation = useMutation({
     mutationFn: generateStory,
     onMutate: async () => {
@@ -54,7 +54,7 @@ function ProfileComponent() {
     console.log("selected" + language)
   };
 
-  if (isError) return <ErrorBadge />;
+  if (isError) return <ErrorBadge error={error} />;
   if (isPending) return <LoadingBubbles />;
 
   return (
@@ -63,7 +63,8 @@ function ProfileComponent() {
      <SelectLanguage onLanguageSelect={handleLanguageSelect}/>
      </div>
      <div className="flex flex-col justify-center items-center gap-4">
-     <h1 className="badge badge-ghost p-4">Hello {user?.firstName}!</h1>
+     <h1 className="badge badge-ghost p-4 tracking-widest text-2xl">Hello {user?.firstName}!</h1>
+     <h1 className="badge badge-secondary p-4 tracking-widest text-xl">✨It's time to create your STORY✨</h1>
      <StoryForm onSubmit={handleFormSubmit} />
      </div>
       
