@@ -1,45 +1,60 @@
-#name: Build and deploy to GCP
-#on:
-#  push:
-#    branches:
-#      - main
-#  workflow_dispatch:
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    env:
-#      IMAGE_URL: europe-north1-docker.pkg.dev/night-owl-reads/cloud-run-source-deploy/stories_backend/stories_backend:${{ github.sha }}
-#    steps:
-#      - uses: actions/checkout@v3
-#      - id: "auth"
-#        name: Authenticate GCP
-#        uses: google-github-actions/auth@v1
-#        with:
-#          credentials_json: "${{ secrets.GCP_SA_KEY }}"
-#      - name: Set up Cloud SDK
-#        uses: google-github-actions/setup-gcloud@v1
-#      - name: Use gcloud CLI
-#        run: gcloud info
-#      - name: Configure docker
-#        run: gcloud auth configure-docker europe-north1-docker.pkg.dev
-#      - name: Docker Build
-#        run: >
-#          docker build --no-cache -t ${{ env.IMAGE_URL }}
-#          ./backend -f ./backend/Dockerfile
-#          --build-arg DATABASE_USERNAME=${{ vars.DATABASE_USERNAME }}
-#          --build-arg DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
-#          --build-arg SUPBASE_URL=${{ vars.SUPABASE_URL }}
-#          --build-arg SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
-#      - name: Docker Push
-#        run: docker push $IMAGE_URL
-#      - name: Update Cloud Run service
-#        uses: google-github-actions/deploy-cloudrun@v1
-#        with:
-#          env_vars: |-
-#            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}}
-#            DATABASE_USERNAME=${{vars.DATABASE_USERNAME}}
-#            SUPABASE_URL=${{vars.SUPABASE_URL}}
-#            SUPABASE_KEY=${{secrets.SUPABASE_KEY}}
-#          region: europe-north1
-#          service: stories_backend
-#          image: ${{ env.IMAGE_URL }}
+name: Build and deploy to GCP
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_URL: europe-north1-docker.pkg.dev/calcium-circuit-442314-d7/cloud-run-source-deploy/stories_backend/stories_backend:${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: "auth"
+        name: Authenticate GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+      - name: Use gcloud CLI
+        run: gcloud info
+      - name: Configure docker
+        run: gcloud auth configure-docker europe-north1-docker.pkg.dev
+      - name: Docker Build
+        run: >
+          docker build --no-cache -t ${{ env.IMAGE_URL }}
+          ./backend -f ./backend/Dockerfile
+          --build-arg DATABASE_USERNAME=${{ vars.DATABASE_USERNAME }}
+          --build-arg DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+          --build-arg SUPBASE_URL=${{ vars.SUPABASE_URL }}
+          --build-arg SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
+          --build-arg openai_model=${{ vars.OPENAI_MODEL }}
+          --build-arg openai_api_key=${{ secrets.OPENAI_API_KEY }}
+          --build-arg openai_api_url=${{ vars.OPENAI_API_URL }}
+          --build-arg dalle_api_url=${{ vars.DALLE_API_URL }}
+          --build-arg DB_BASE_URL=${{ vars.DB_BASE_URL }}
+          --build-arg SUPABASE_PASSWORD=${{ secrets.SUPABASE_PASSWORD }}
+          --build-arg SUPABASE_PATH_IMAGE_URL=${{ vars.SUPABASE_PATH_IMAGE_URL }}
+
+      - name: Docker Push
+        run: docker push $IMAGE_URL
+      - name: Update Cloud Run service
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          env_vars: |-
+            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}}
+            DATABASE_USERNAME=${{vars.DATABASE_USERNAME}}
+            SUPABASE_URL=${{vars.SUPABASE_URL}}
+            SUPABASE_KEY=${{secrets.SUPABASE_KEY}}
+            OPENAI_MODEL=${{ vars.OPENAI_MODEL }}
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            OPENAI_API_URL=${{ vars.OPENAI_API_URL }}
+            DALLE_API_URL=${{ vars.DALLE_API_URL }}
+            DB_BASE_URL=${{ vars.DB_BASE_URL }}
+            SUPABASE_PASSWORD=${{ secrets.SUPABASE_PASSWORD }}
+            SUPABASE_PATH_IMAGE_URL=${{ vars.SUPABASE_PATH_IMAGE_URL }}
+          region: europe-north1
+          service: stories_backend
+          image: ${{ env.IMAGE_URL }}
