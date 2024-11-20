@@ -1,21 +1,25 @@
-import { StoryInput } from "./types/types";
+import { StoryRequest } from "./types/types";
 
 const BASE_DEV_URL = "http://localhost:8080/stories";
 
-export const generateStory = async (payload: StoryInput, userId: string) => {
-  const response = await fetch(`${BASE_DEV_URL}/generate/${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+export const generateStory = async (storyRequest: StoryRequest) => {
+  const response = await fetch(
+    `${BASE_DEV_URL}/generate/${storyRequest.userId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(storyRequest.payload),
+    }
+  );
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.message || `Error: ${response.statusText}`);
   }
-  console.log(await response.json());
-  return response.json();
+  const json = await response.json();
+  console.log("json", json);
+  return json;
 };
 
 export const getAllStoriesByUserId = async (userId: string) => {

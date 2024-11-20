@@ -14,7 +14,7 @@ export const storySchema = z.object({
 });
 
 export type StoryInput = z.infer<typeof storySchema>;
-
+export type StoryRequest = { payload: StoryInput; userId: string };
 export interface StoryDTO {
   id: number;
   title: string;
