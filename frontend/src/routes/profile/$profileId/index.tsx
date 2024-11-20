@@ -3,10 +3,9 @@ import { generateStory } from "@/data/api";
 import { StoryInput } from "@/data/types/types";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { ErrorBadge } from "@/components/badge/ErrorBadge";
 import { LoadingBubbles } from "@/components/loading/LoadingBubbles";
-import { redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute("/profile/$profileId/")({
   component: ProfileComponent,
@@ -41,7 +40,6 @@ function ProfileComponent() {
 
   if (isError) return <ErrorBadge />;
   if (isPending) return <LoadingBubbles />;
- 
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">

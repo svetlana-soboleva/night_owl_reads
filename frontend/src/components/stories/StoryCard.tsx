@@ -1,6 +1,7 @@
 import { Story } from "@/data/types/types";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { DeleteButton } from "../button/DeleteButton";
 
 interface Props {
   story: Story;
@@ -29,7 +30,8 @@ export const StoryCard = ({ story, profileId }: Props) => {
         <h3 className=" text-lg font-bold text-ellipsis overflow-hidden whitespace-nowrap abeezee-regular-italic">
           {story.title.replace(/([A-Z])/g, " $1").trim()}
         </h3>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-between">
+          <DeleteButton />
           <Link to={`/profile/${profileId}/stories/${story.id}`}>
             <button className="btn btn-secondary">Read</button>
           </Link>
