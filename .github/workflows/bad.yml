@@ -1,4 +1,4 @@
-name: Build and deploy to GCP
+name: Build and deploy backend to GCP
 on:
   push:
     branches:

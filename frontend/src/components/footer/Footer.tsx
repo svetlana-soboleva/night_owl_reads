@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="footer backdrop-blur-md bg-transparent  ounded-2xl text-neutral-content items-center p-4 flex  justify-between">
+    <footer className="footer backdrop-blur-md bg-transparent rounded-2xl text-neutral-content items-center p-4 flex  justify-between">
       <aside className="grid-flow-col items-center">
         <svg
           width="36"

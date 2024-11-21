@@ -7,16 +7,16 @@ interface storyFormProps {
   onSubmit: (data: StoryInput) => void;
 }
 
-export const StoryForm = ({onSubmit} : storyFormProps) => {
+export const StoryForm = ({ onSubmit }: storyFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<StoryInput>({ resolver: zodResolver(storySchema) });
-  
+
   const handleFormSubmit: SubmitHandler<StoryInput> = (data) => {
-    onSubmit(data)
-  }
+    onSubmit(data);
+  };
 
   return (
     <form
@@ -27,7 +27,7 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
         Hero
         <input
           type="text"
-          className="grow"
+          className="grow placeholder-gray-700"
           placeholder="Hamster"
           {...register("hero")}
         />
@@ -39,7 +39,7 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
         Place
         <input
           type="text"
-          className="grow"
+          className="grow placeholder-gray-700"
           placeholder="Magic Forest"
           {...register("place")}
         />
@@ -51,7 +51,7 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
         Companion
         <input
           type="text"
-          className="grow"
+          className="grow placeholder-gray-700"
           placeholder="Squirrel"
           {...register("companion")}
         />
@@ -63,7 +63,7 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
         Quest
         <input
           type="text"
-          className="grow"
+          className="grow placeholder-gray-700"
           placeholder="What they did?"
           {...register("quest")}
         />
@@ -75,7 +75,7 @@ export const StoryForm = ({onSubmit} : storyFormProps) => {
         Emotions
         <input
           type="text"
-          className="grow"
+          className="grow placeholder-gray-700"
           placeholder="How did they feel?"
           {...register("emotion")}
         />

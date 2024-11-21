@@ -29,6 +29,10 @@ export const StoryCard = ({ story, profileId }: Props) => {
   return (
     <div className="card bg-base-100 shadow-xl h-64 flex flex-col justify-between">
       <figure className="h-32 overflow-hidden">
+      <div className="absolute top-2 right-2 z-10">
+      <DeleteButton onClick={() => deleteMutation.mutate(story.id)} />
+
+      </div>
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
             <div className="loader border-t-2 border-b-2 border-gray-600 w-6 h-6 rounded-full animate-spin"></div>
@@ -48,13 +52,6 @@ export const StoryCard = ({ story, profileId }: Props) => {
           {story.title.replace(/([A-Z])/g, " $1").trim()}
         </h3>
         <div className="card-actions justify-between">
-          {/* <button
-            className="hover:cursor-pointer"
-            onClick={() => deleteMutation.mutate(story.id)}
-          >
-            Delete
-          </button> */}
-          <DeleteButton onClick={() => deleteMutation.mutate(story.id)} />
           <Link to={`/profile/${profileId}/stories/${story.id}`}>
             <button className="btn btn-secondary uppercase">Read</button>
           </Link>

@@ -62,7 +62,7 @@ function ProfileComponent() {
     );
 
   return (
-    <div className="flex flex-col gap-8 mt-4 mb-4 w-full">
+    <div className="flex flex-col gap-8 mt-4 mb-4w-full">
       <div className="flex justify-end">
         <SelectLanguage onLanguageSelect={handleLanguageSelect} />
       </div>

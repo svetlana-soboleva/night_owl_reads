@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      IMAGE_URL: europe-north1-docker.pkg.dev/regal-marking-409018/cloud-run-source-deploy/owl-night-reads/owl-night-reads:${{ github.sha }}
+      IMAGE_URL: europe-north1-docker.pkg.dev/regal-marking-409018/cloud-run-source-deploy/night-owl-reads/night-owl-reads:${{ github.sha }}
     #the last part is service name
     steps:
       - uses: actions/checkout@v3
@@ -43,5 +43,5 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           region: europe-north1
-          service: owl-night-reads
+          service: night-owl-reads
           image: ${{ env.IMAGE_URL }}

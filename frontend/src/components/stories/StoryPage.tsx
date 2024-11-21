@@ -81,7 +81,7 @@ export const StoryPage = ({ story, isLoading }: Props) => {
         </h2>
         <StoryPartsCarousel language={story.language} chunks={story.chunks} />
         <div className="btn btn-secondary w-20" onClick={toggleReadAloud}>
-          {isPlaying ? "STOP" : "READ"}
+          {isPlaying ? "STOP" : "READ ALOUD"}
         </div>
       </div>
     </div>
