@@ -14,6 +14,7 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const language = story.language;
   const { speakWord } = useSpeech({ language });
+  const [editedTitle, setEditedTitle] = useState(story.title);
 
   let text = "";
   story.chunks.forEach((c) => (text += c.text));
@@ -38,6 +39,13 @@ export const StoryPage = ({ story, isLoading }: Props) => {
     } else window.speechSynthesis.cancel()
   };
 
+  const saveTitle = () => {
+    // Logic to save the new title (e.g., API call)
+    console.log("Saving new title:", editedTitle);
+    setIsEditingTitle(false);
+  };
+
+  
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
       <div className="btn btn-secondary w-20 m-2" onClick={toggleReadAloud}>READ </div>

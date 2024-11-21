@@ -58,4 +58,21 @@ public class StoryService {
       repo.deleteById(id);
     }
 
+    public Story updateStory(Long id, SingleStoryDTO storyToUpdate){
+        Story story = repo.findById(id).orElseThrow(() -> new NoSuchElementException("No story found with ID: " + id));
+
+        if (storyToUpdate.title() != null && !storyToUpdate.title().isEmpty()) {
+            story.setTitle(storyToUpdate.title());
+        }
+        if (storyToUpdate.imageUrls() != null && !storyToUpdate.imageUrls().isEmpty()) {
+            story.setImageUrl(storyToUpdate.imageUrls());
+        }
+        if (storyToUpdate.language() != null && !storyToUpdate.language().isEmpty()) {
+            story.setLanguage(storyToUpdate.language());
+        }
+        // dont update chunks yet =)
+        return repo.save(story);
+
+    }
+
 }

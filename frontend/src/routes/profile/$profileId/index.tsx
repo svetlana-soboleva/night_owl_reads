@@ -64,7 +64,7 @@ function ProfileComponent() {
      </div>
      <div className="flex flex-col justify-center items-center gap-4">
      <h1 className="badge badge-ghost p-4 tracking-widest text-2xl">Hello {user?.firstName}!</h1>
-     <h1 className="badge badge-secondary p-4 tracking-widest text-xl">✨It's time to create your STORY✨</h1>
+     <h1 className="badge badge-secondary p-4 tracking-wide text-lg md:text-xl">✨It's time to create your STORY✨</h1>
      <StoryForm onSubmit={handleFormSubmit} />
      </div>
       

@@ -8,6 +8,7 @@ import com.stories.owl.domain.story.dtos.StoryDTO;
 import com.stories.owl.domain.story.dtos.StoryGalleryDTO;
 import com.stories.owl.domain.story.dtos.StoryRequestDTO;
 import com.stories.owl.domain.story.models.Story;
+import com.stories.owl.domain.storyPart.dtos.StoryPartDTO;
 import com.stories.owl.domain.storyPart.model.StoryPart;
 import com.stories.owl.domain.supaBase.services.SupabaseService;
 import com.stories.owl.domain.user.UserService;
@@ -159,6 +160,22 @@ public class StoryController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/update-title/{id}")
+   @PatchMapping("/update-title/{id}")
+    public ResponseEntity<SingleStoryDTO> updateStory(@PathVariable Long id, @RequestBody SingleStoryDTO  body){
+       if (body == null) {
+           return ResponseEntity.badRequest().body(null);
+       }
+       Story updatedStory = storyService.updateStory(id, body);
+       SingleStoryDTO updatedStoryDTO = new SingleStoryDTO(
+               updatedStory.getId(),
+               updatedStory.getTitle(),
+               updatedStory.getImageUrl(),
+               updatedStory.getLanguage(),
+               updatedStory.getChunks().stream()
+                       .map(chunk -> new StoryPartDTO(chunk.getId(), chunk.getText()))
+                       .toList()
+       );
+      return ResponseEntity.ok().body(updatedStoryDTO);
+   }
 
 }
