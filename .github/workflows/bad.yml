@@ -28,7 +28,7 @@ jobs:
           ./backend -f ./backend/Dockerfile
           --build-arg DB_USERNAME=${{ vars.DB_USERNAME }}
           --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          --build-arg SUPBASE_URL=${{ vars.SUPABASE_URL }}
+          --build-arg SUPABASE_URL=${{ vars.SUPABASE_URL }}
           --build-arg SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
           --build-arg OPENAI_MODEL=${{ vars.OPENAI_MODEL }}
           --build-arg OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
@@ -40,14 +40,15 @@ jobs:
 
       - name: Docker Push
         run: docker push $IMAGE_URL
+
       - name: Update Cloud Run service
         uses: google-github-actions/deploy-cloudrun@v1
-        with: #fix this!!!
+        with: 
           env_vars: |-
-            SUPABASE_URL=${{vars.SUPABASE_URL}}
-            SUPABASE_KEY=${{secrets.SUPABASE_KEY}}
             DB_USERNAME=${{vars.DB_USERNAME}}
             DB_PASSWORD=${{secrets.DB_PASSWORD}}
+            SUPABASE_URL=${{vars.SUPABASE_URL}}
+            SUPABASE_KEY=${{secrets.SUPABASE_KEY}}
             OPENAI_MODEL=${{ vars.OPENAI_MODEL }}
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
             OPENAI_API_URL=${{ vars.OPENAI_API_URL }}

@@ -15,11 +15,11 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   const language = story.language;
   const { speakWord } = useSpeech({ language });
 
-  // useEffect(() => {
-  //   return () => {
-  //     window.speechSynthesis.cancel();
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
 
   let text = "";
   story.chunks.forEach((c) => (text += c.text));
