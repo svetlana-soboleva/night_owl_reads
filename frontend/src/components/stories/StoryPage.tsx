@@ -15,11 +15,11 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   const language = story.language;
   const { speakWord } = useSpeech({ language });
 
-  useEffect(() => {
-    return () => {
-      window.speechSynthesis.cancel();
-    };
-  }, []); 
+  // useEffect(() => {
+  //   return () => {
+  //     window.speechSynthesis.cancel();
+  //   };
+  // }, []);
 
   let text = "";
   story.chunks.forEach((c) => (text += c.text));
@@ -49,14 +49,14 @@ export const StoryPage = ({ story, isLoading }: Props) => {
 
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
-       <div className="card-actions m-4">
-          <button
-            className="btn btn-secondary"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-        </div>
+      <div className="card-actions m-4">
+        <button
+          className="btn btn-secondary"
+          onClick={() => window.history.back()}
+        >
+          Back
+        </button>
+      </div>
       <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto relative">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
@@ -81,8 +81,8 @@ export const StoryPage = ({ story, isLoading }: Props) => {
         </h2>
         <StoryPartsCarousel language={story.language} chunks={story.chunks} />
         <div className="btn btn-secondary w-20" onClick={toggleReadAloud}>
-        {isPlaying ? "STOP" : "READ"}
-      </div>
+          {isPlaying ? "STOP" : "READ"}
+        </div>
       </div>
     </div>
   );

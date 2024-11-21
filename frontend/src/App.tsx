@@ -6,7 +6,7 @@ import { LoadingBubbles } from "./components/loading/LoadingBubbles";
 
 const router = createRouter({
   routeTree,
-  context: { authentication: undefined! }, 
+  context: { authentication: undefined! },
 });
 
 declare module "@tanstack/react-router" {
@@ -26,7 +26,11 @@ export const App = () => {
 const RouterWrapper = () => {
   const authentication = useAuth();
   if (!authentication.isLoaded) {
-    return <LoadingBubbles/>
+    return (
+      <div className="text-center">
+        <LoadingBubbles />
+      </div>
+    );
   }
   return <RouterProvider router={router} context={{ authentication }} />;
 };

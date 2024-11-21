@@ -21,7 +21,7 @@ function RouteComponent() {
     isError,
     isLoading,
     isPending,
-    error
+    error,
   } = useQuery({
     queryKey: ["story", storyIsNumber],
     queryFn: () => getStoryById(storyIsNumber),
@@ -33,7 +33,7 @@ function RouteComponent() {
   }
 
   if (isError) {
-    return <ErrorBadge error={error}/>
+    return <ErrorBadge error={error} />;
   }
 
   if (story) {
