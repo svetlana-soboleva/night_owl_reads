@@ -11,7 +11,7 @@ spring:
         options:
           model: gpt-4o
       # Line for the images
-      api-key: ${openai.api.key}
+      api-key: ${OPENAI_API_KEY}
   datasource:
     url: ${DB_BASE_URL}
     username: ${DB_USERNAME}
@@ -34,6 +34,6 @@ gpt:
     Give it a fitting title as well. Use a single line break to separate the title 
     from the tale. The words are related to hero, the place, the friend, what they were doing, how they feel: %s, %s, %s, %s, %s.
 
-  api-url: ${openai.api.url}
-  model: ${openai.model}
+  api-url: ${OPENAI_API_URL}
+  model: ${OPENAI_MODEL}
 

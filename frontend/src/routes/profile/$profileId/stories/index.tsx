@@ -5,7 +5,6 @@ import { getAllStoriesByUserId } from "@/data/api";
 import { Story } from "@/data/types/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { P } from "node_modules/@clerk/clerk-react/dist/useAuth-DT1ot2zi.d.mts";
 
 export const Route = createFileRoute("/profile/$profileId/stories/")({
   component: StoriesComponent,

@@ -19,7 +19,7 @@ export const StoryPage = ({ story, isLoading }: Props) => {
     return () => {
       window.speechSynthesis.cancel();
     };
-  }, []);
+  }, []); 
 
   let text = "";
   story.chunks.forEach((c) => (text += c.text));
@@ -49,9 +49,14 @@ export const StoryPage = ({ story, isLoading }: Props) => {
 
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
-      <div className="btn btn-secondary w-20 m-2" onClick={toggleReadAloud}>
-        {isPlaying ? "STOP" : "READ"}
-      </div>
+       <div className="card-actions m-4">
+          <button
+            className="btn btn-secondary"
+            onClick={() => window.history.back()}
+          >
+            Back
+          </button>
+        </div>
       <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto relative">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
@@ -75,14 +80,9 @@ export const StoryPage = ({ story, isLoading }: Props) => {
           {/* .replace(/([A-Z])/g, " $1").trim() */}
         </h2>
         <StoryPartsCarousel language={story.language} chunks={story.chunks} />
-        <div className="card-actions mt-4">
-          <button
-            className="btn btn-secondary"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-        </div>
+        <div className="btn btn-secondary w-20" onClick={toggleReadAloud}>
+        {isPlaying ? "STOP" : "READ"}
+      </div>
       </div>
     </div>
   );

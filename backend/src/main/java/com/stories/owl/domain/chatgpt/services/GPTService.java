@@ -12,10 +12,10 @@ public class GPTService {
     @Value("${gpt.prompt-template}")
     private String promptTemplate;
 
-    @Value("${openai.model}")
+    @Value("${OPENAI_MODEL}")
     private String model;
 
-    @Value(("${openai.api.url}"))
+    @Value(("${OPENAI_API_URL}"))
     private String apiURL;
 
     private final RestTemplate restTemplate;
