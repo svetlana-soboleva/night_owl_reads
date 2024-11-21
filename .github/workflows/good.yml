@@ -31,8 +31,10 @@ jobs:
         run: gcloud auth configure-docker europe-north1-docker.pkg.dev
 
       - name: Docker Build
-        run: docker build --no-cache -t ${{ env.IMAGE_URL }} ./frontend -f ./frontend/Dockerfile \
-            --build-arg VITE_CLERK_PUBLISHABLE_KEY=${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+        run: >
+         docker build --no-cache -t ${{ env.IMAGE_URL }} 
+         ./frontend -f ./frontend/Dockerfile
+         --build-arg VITE_CLERK_PUBLISHABLE_KEY=${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
 
       - name: Docker Push
         run: docker push $IMAGE_URL
