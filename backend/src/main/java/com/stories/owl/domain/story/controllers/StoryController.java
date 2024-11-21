@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stories")
-@CrossOrigin(origins = "https://owl-night-reads-481690514559.europe-north1.run.app")
+@CrossOrigin(origins = "https://night-owl-reads-481690514559.europe-north1.run.app")
 public class StoryController {
 
     private final GPTService gptService;
