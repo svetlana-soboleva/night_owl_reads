@@ -6,6 +6,7 @@ export const ErrorBadge = ({error} :{error : Error}) => {
       <div className="badge badge-error gap-2 p-8 text-xl">
         <div><Link to="/">
           <svg
+           onClick={() => window.history.back()}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
