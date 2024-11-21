@@ -1,7 +1,7 @@
 import { StoryRequest } from "./types/types";
 
 //const BASE_DEV_URL = "http://localhost:8080/stories";
-const PROD_URL="https://stories123-481690514559.europe-north1.run.app"
+const PROD_URL="https://stories123-481690514559.europe-north1.run.app/stories"
 
 export const generateStory = async (storyRequest: StoryRequest) => {
   const response = await fetch(
