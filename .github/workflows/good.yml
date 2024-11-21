@@ -32,7 +32,7 @@ jobs:
 
       - name: Docker Build
         run: docker build --no-cache -t ${{ env.IMAGE_URL }} ./frontend -f ./frontend/Dockerfile \
-            --build-arg CLERK_API_KEY=${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+            --build-arg VITE_CLERK_PUBLISHABLE_KEY=${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
 
       - name: Docker Push
         run: docker push $IMAGE_URL
