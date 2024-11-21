@@ -36,5 +36,10 @@ export const useSpeech = ({ language }: { language: string }) => {
     }
   };
 
-  return { voices, speakWord };
+  const cancel = () =>{
+    synth.cancel()
+  }
+  
+
+  return { voices, speakWord, cancel };
 };

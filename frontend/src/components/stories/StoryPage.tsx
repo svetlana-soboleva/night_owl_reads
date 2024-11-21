@@ -1,6 +1,6 @@
 import { SingleStoryPage } from "@/data/types/types";
 import { StoryPartsCarousel } from "./StoryPartsCarousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadingBubbles } from "../loading/LoadingBubbles";
 import { useSpeech } from "@/hooks/useSpeech";
 
@@ -14,11 +14,15 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const language = story.language;
   const { speakWord } = useSpeech({ language });
-  const [editedTitle, setEditedTitle] = useState(story.title);
+
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
 
   let text = "";
   story.chunks.forEach((c) => (text += c.text));
-  console.log(text + "text");
 
   if (isLoading) {
     return (
@@ -33,22 +37,21 @@ export const StoryPage = ({ story, isLoading }: Props) => {
   }
 
   const toggleReadAloud = () => {
-    setIsPlaying(!isPlaying);
-    if(isPlaying){
-      speakWord(text)
-    } else window.speechSynthesis.cancel()
+    setIsPlaying((prev) => {
+      if (prev) {
+        window.speechSynthesis.cancel();
+      } else {
+        speakWord(text);
+      }
+      return !prev;
+    });
   };
 
-  const saveTitle = () => {
-    // Logic to save the new title (e.g., API call)
-    console.log("Saving new title:", editedTitle);
-    setIsEditingTitle(false);
-  };
-
-  
   return (
     <div className="card bg-base-100 m-4 flex flex-col lg:flex-row justify-between items-stretch lg:gap-8">
-      <div className="btn btn-secondary w-20 m-2" onClick={toggleReadAloud}>READ </div>
+      <div className="btn btn-secondary w-20 m-2" onClick={toggleReadAloud}>
+        {isPlaying ? "STOP" : "READ"}
+      </div>
       <figure className="p-4 lg:p-8 flex-grow lg:w-1/2 h-96 lg:h-auto relative">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
