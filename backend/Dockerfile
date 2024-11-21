@@ -21,7 +21,7 @@ RUN mvn install:install-file \
 COPY src src
 
 # Accept build arguments for PostgreSQL environment variables
-ARG SUPBASE_URL
+ARG SUPABASE_URL
 ARG SUPABASE_KEY
 ARG DB_USERNAME
 ARG DB_PASSWORD

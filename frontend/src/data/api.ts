@@ -12,13 +12,16 @@ export const generateStory = async (storyRequest: StoryRequest) => {
       },
       body: JSON.stringify({
         language: storyRequest.language,
-        ...storyRequest.payload, 
+        ...storyRequest.payload,
       }),
     }
   );
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || `Error: ${response.statusText}`);
+    throw new Error(
+      errorData.message ||
+        `Oops! Our system is taking a little nap right now. Please try again later! ${response.statusText}`
+    );
   }
   const json = await response.json();
   console.log("json", json);
@@ -51,7 +54,10 @@ export const getStoryById = async (storyId: number) => {
     });
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || `Error: ${response.statusText}`);
+      throw new Error(
+        errorData.message ||
+          `Yikes! Our server is feeling a little tired. Let's try again later! ${response.statusText}`
+      );
     }
     const data = await response.json();
     return data;
@@ -75,9 +81,7 @@ export const deleteStoryById = async (id: number) => {
       throw new Error(errorData.message || `Error: ${response.statusText}`);
     }
     console.log("Deleted");
-   
   } catch (error) {
     throw new Error(`Error deleting the story: ${error}`);
   }
 };
-

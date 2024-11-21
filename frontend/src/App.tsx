@@ -27,7 +27,7 @@ const RouterWrapper = () => {
   const authentication = useAuth();
   if (!authentication.isLoaded) {
     return (
-      <div className="text-center">
+      <div className="flex justify-center items-center h-screen">
         <LoadingBubbles />
       </div>
     );
