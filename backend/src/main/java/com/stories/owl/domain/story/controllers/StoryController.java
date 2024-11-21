@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stories")
-@CrossOrigin
+@CrossOrigin(origins = "https://owl-night-reads-481690514559.europe-north1.run.app")
 public class StoryController {
 
     private final GPTService gptService;
@@ -58,19 +58,19 @@ public class StoryController {
             user = userService.save(user);
         }
 
-//        String storyContent = gptService.generateStory(
-//                body.language(),
-//                body.hero(),
-//                body.place(),
-//                body.quest(),
-//                body.companion(),
-//                body.emotion()
-//        );
-        String storyContent = """
-                Title: Whiskers Cat and Polly
-
-              In a quiet forest, a clever cat named Whiskers lived with his friends—a talkative parrot named Polly and a playful squirrel named Nibbles. Every morning, Whiskers would gather them to explore. One sunny day, they stumbled upon a hidden garden filled with vibrant flowers and glittering fruit. Polly squawked with delight, Nibbles darted around sniffing everything, and Whiskers spotted a golden key buried beneath a bush. They soon discovered it unlocked a tiny, magical door in an old oak tree. Inside was a treasure chest filled with seeds and acorns. They planted them together, growing a paradise for all forest creatures.
-              """;
+        String storyContent = gptService.generateStory(
+                body.language(),
+                body.hero(),
+                body.place(),
+                body.quest(),
+                body.companion(),
+                body.emotion()
+        );
+//        String storyContent = """
+//                Title: Whiskers Cat and Polly
+//
+//              In a quiet forest, a clever cat named Whiskers lived with his friends—a talkative parrot named Polly and a playful squirrel named Nibbles. Every morning, Whiskers would gather them to explore. One sunny day, they stumbled upon a hidden garden filled with vibrant flowers and glittering fruit. Polly squawked with delight, Nibbles darted around sniffing everything, and Whiskers spotted a golden key buried beneath a bush. They soon discovered it unlocked a tiny, magical door in an old oak tree. Inside was a treasure chest filled with seeds and acorns. They planted them together, growing a paradise for all forest creatures.
+//              """;
         //System.out.println("GENERATE STORY CONTENT = " + storyContent);
 
         String[] lines = storyContent.split("\n");
@@ -103,7 +103,8 @@ public class StoryController {
                 "The image should be friendly";
 //"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";
         //"https://images.nightcafe.studio/jobs/kWGLUgAwkj1kLLvcqvJD/kWGLUgAwkj1kLLvcqvJD--1--kgpmj.jpg?tr=w-1600,c-at_max.png"
-        String imageUrl = "https://images.nightcafe.studio/jobs/KqK9M1Gftz1zFJG1aTlV/KqK9M1Gftz1zFJG1aTlV--4--lbh90_2x.jpg?tr=w-1600,c-at_max.png"; // dalleService.generateImage(prompt);
+        //"https://images.nightcafe.studio/jobs/KqK9M1Gftz1zFJG1aTlV/KqK9M1Gftz1zFJG1aTlV--4--lbh90_2x.jpg?tr=w-1600,c-at_max.png";
+        String imageUrl = dalleService.generateImage(prompt);
         System.out.println("imageUrl = " + imageUrl);
         byte[] imageBytes = downloadImageAsBytes(imageUrl);
         //remove white spaces to save url
