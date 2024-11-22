@@ -20,7 +20,7 @@ export const StoryForm = ({ onSubmit }: storyFormProps) => {
 
   return (
     <form
-      className="flex flex-col gap-2 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16"
+      className="flex flex-col gap-2 mb-4 backdrop-blur-md bg-transparent rounded-2xl px-8 py-16"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
       <label className="input input-bordered input-secondary flex items-center gap-2">

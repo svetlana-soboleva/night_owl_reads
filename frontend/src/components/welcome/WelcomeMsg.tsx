@@ -8,12 +8,12 @@ export const WelcomeMsg = () => {
       <p className="text-lg text-white">
         Stories are waiting for you—where every word unlocks a new adventure!
       </p>
-      <Link
+      <button
         onClick={() => navigate({ to: "/signin" })}
         className="bg-teal-700 font-semibold py-2 px-6 rounded-full hover:bg-teal-900 text-white"
       >
         Start Your Adventure
-      </Link>
+      </button>
       <p className="mt-4 text-md text-white">
         <strong>Did you know?</strong> Reading helps you imagine amazing worlds
         and understand new things! Keep reading every day to become a reading
