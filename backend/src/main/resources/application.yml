@@ -31,7 +31,7 @@ gpt:
     if Language is sv generate story in Swedish.
     Story should be between 50 and 70 words, 
     and it should be something clever and nice, suitable for small kids to read. 
-    Give it a fitting title as well. Use a single line break to separate the title 
+    Give it a fitting title on the first line. Use a single line break to separate the title 
     from the tale. The words are related to hero, the place, the friend, what they were doing, how they feel: %s, %s, %s, %s, %s.
 
   api-url: ${OPENAI_API_URL}
