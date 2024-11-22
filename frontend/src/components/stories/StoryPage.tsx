@@ -79,7 +79,12 @@ export const StoryPage = ({ story, isLoading }: Props) => {
           {story.title}
           {/* .replace(/([A-Z])/g, " $1").trim() */}
         </h2>
+        <div className="flex flex-row items-center gap-1">
+        <a className="btn btn-circle">❮</a>
         <StoryPartsCarousel language={story.language} chunks={story.chunks} />
+        <a className="btn btn-circle">❯</a>
+        </div>
+        
         <div className="btn btn-secondary w-20" onClick={toggleReadAloud}>
           {isPlaying ? "STOP" : "READ ALOUD"}
         </div>

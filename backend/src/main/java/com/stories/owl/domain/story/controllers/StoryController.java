@@ -80,7 +80,9 @@ public class StoryController {
             title = title.replaceFirst("Title: ", "").trim();
         }
         //keep space!
-        title = title.replaceAll("[^a-zA-ZåäöÅÄÖ0-9 ]", "");
+        String titleForTitle = title.replaceAll("[^a-zA-ZåäöÅÄÖ0-9 ]", "");
+        String titleForSupaBase = title.replaceAll("[^a-zA-Z0-9 ]", "");
+
 
         String storyBody = String.join(" ", Arrays.copyOfRange(lines, 1, lines.length)).trim();
 
@@ -88,7 +90,7 @@ public class StoryController {
 
         Story story = new Story();
         story.setUser(user);
-        story.setTitle(title);
+        story.setTitle(titleForTitle);
         story.setLanguage(body.language());
 
         List<StoryPart> parts = new ArrayList<>();
@@ -107,7 +109,7 @@ public class StoryController {
         System.out.println("imageUrl = " + imageUrl);
         byte[] imageBytes = downloadImageAsBytes(imageUrl);
         //remove white spaces to save url
-        String titleForSupabaseUrl = title.replaceAll(" ", "");
+        String titleForSupabaseUrl = titleForSupaBase.replaceAll(" ", "");
         String finalFileName = supabase.saveImageToBucket(imageBytes,titleForSupabaseUrl);
 
         story.setImageUrl(finalFileName);
