@@ -1,11 +1,11 @@
 import { StoryRequest } from "./types/types";
 
-const BASE_DEV_URL = "http://localhost:8080/stories";
+//const BASE_DEV_URL = "http://localhost:8080/stories";
 const PROD_URL="https://stories123-481690514559.europe-north1.run.app/stories"
 
 export const generateStory = async (storyRequest: StoryRequest) => {
   const response = await fetch(
-    `${BASE_DEV_URL}/generate/${storyRequest.userId}`,
+    `${PROD_URL}/generate/${storyRequest.userId}`,
     {
       method: "POST",
       headers: {
@@ -31,7 +31,7 @@ export const generateStory = async (storyRequest: StoryRequest) => {
 
 export const getAllStoriesByUserId = async (userId: string) => {
   try {
-    const response = await fetch(`${BASE_DEV_URL}/user/${userId}`);
+    const response = await fetch(`${PROD_URL}/user/${userId}`);
     if (!response.ok) {
       throw new Error(
         `Oops! Our system is taking a little nap right now. Please try again later! ${response.statusText}`
@@ -48,7 +48,7 @@ export const getAllStoriesByUserId = async (userId: string) => {
 
 export const getStoryById = async (storyId: number) => {
   try {
-    const response = await fetch(`${BASE_DEV_URL}/user/stories/${storyId}`, {
+    const response = await fetch(`${PROD_URL}/user/stories/${storyId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const getStoryById = async (storyId: number) => {
 
 export const deleteStoryById = async (id: number) => {
   try {
-    const response = await fetch(`${BASE_DEV_URL}/delete`, {
+    const response = await fetch(`${PROD_URL}/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

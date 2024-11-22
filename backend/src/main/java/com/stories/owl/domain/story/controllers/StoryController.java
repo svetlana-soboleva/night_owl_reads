@@ -80,8 +80,7 @@ public class StoryController {
             title = title.replaceFirst("Title: ", "").trim();
         }
         //keep space!
-        title = title.replaceAll("[^a-zA-Z0-9 ]", "");
-
+        title = title.replaceAll("[^a-zA-ZåäöÅÄÖ0-9 ]", "");
 
         String storyBody = String.join(" ", Arrays.copyOfRange(lines, 1, lines.length)).trim();
 
