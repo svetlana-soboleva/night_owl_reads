@@ -75,3 +75,10 @@ Finding engaging, personalized, and age-appropriate stories for kids can be time
 ![Screenshot](welcome.png)
 ![Screenshot](main.png)
 ![Screenshot](stories.png)
+
+
+[Watch the video on YouTube](https://youtube.com/shorts/Jx3S_R18oaM?feature=share)
+
+[Watch the video on YouTube](https://youtube.com/shorts/j54pMv4kUwM?feature=share)
+
+[Watch the video on YouTube](https://youtube.com/shorts/Nl1XHsLh1DQ?feature=share)

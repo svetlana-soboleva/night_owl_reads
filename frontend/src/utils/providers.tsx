@@ -15,12 +15,12 @@ export const Providers = ({ children }: ProvidersProps) => {
   return (
     <>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-        <QueryClientProvider client={queryClient}>
-          {process.env.NODE_ENV === "development" && (
+        {process.env.NODE_ENV === "development" && (
+          <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
-          )}
-          {children}
-        </QueryClientProvider>
+            {children}
+          </QueryClientProvider>
+        )}
       </ClerkProvider>
     </>
   );
